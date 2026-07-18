@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Environment and runtime data
+.env
+.env.*
+!*.example
+uploads/
+
+# Local tooling metadata
+.atl/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
