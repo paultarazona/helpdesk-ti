@@ -1,0 +1,23 @@
+{
+  "name": "helpdesk-ti-v1-inseguro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Deliberately vulnerable local-only IT helpdesk security lab.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "supertest": "^7.1.4"
+  }
+}
