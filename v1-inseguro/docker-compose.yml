@@ -21,6 +21,7 @@ services:
       retries: 10
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./src/db:/docker-entrypoint-initdb.d:ro
     restart: unless-stopped
 
 volumes:
