@@ -4,7 +4,7 @@ Educational IT helpdesk project that will compare a deliberately vulnerable loca
 
 ## Status
 
-Planning is available in [docs/plan-mesa-ayuda-ti.md](docs/plan-mesa-ayuda-ti.md). Implementation has not started.
+The implementation follows [docs/plan-mesa-ayuda-ti.md](docs/plan-mesa-ayuda-ti.md). `v1-inseguro` infrastructure is in progress.
 
 ## Security Notice
 
