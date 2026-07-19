@@ -4,6 +4,7 @@ const express = require('express');
 const { requireAuth } = require('./core/middleware/auth');
 const { createAuthRouter } = require('./modules/auth/routes');
 const { createAssetsRouter } = require('./modules/assets/routes');
+const { createCommentsRouter } = require('./modules/comments/routes');
 const { createTicketsRouter } = require('./modules/tickets/routes');
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(cors({ origin: '*' }));
 app.use(createAuthRouter());
 app.use('/assets', requireAuth, createAssetsRouter());
+app.use('/tickets', requireAuth, createCommentsRouter());
 app.use('/tickets', requireAuth, createTicketsRouter());
 
 app.get('/', (_request, response) => {

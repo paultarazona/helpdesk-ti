@@ -22,6 +22,21 @@
       <form method="post" action="/tickets/<%= ticket.id %>/delete">
         <button type="submit">Delete ticket</button>
       </form>
+      <section>
+        <h2>Comments</h2>
+        <% comments.forEach((comment) => { %>
+          <article>
+            <p><strong><%= comment.author_username %></strong></p>
+            <!-- [VULN-002][A03:XSS-Stored][CWE-79] Comment bodies are deliberately rendered without escaping. -->
+            <div><%- comment.body %></div>
+          </article>
+        <% }) %>
+        <form method="post" action="/tickets/<%= ticket.id %>/comments">
+          <!-- [VULN-005][A01:CSRF][CWE-352] Deliberately no CSRF token in v1. -->
+          <label>Comment <textarea name="body" required></textarea></label>
+          <button type="submit">Add comment</button>
+        </form>
+      </section>
     </main>
   </body>
 </html>

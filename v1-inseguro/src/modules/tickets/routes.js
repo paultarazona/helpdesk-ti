@@ -128,7 +128,14 @@ function createTicketsRouter(database = pool) {
         return;
       }
 
-      response.render('tickets/detail', { ticket });
+      const comments = await database.query(
+        `SELECT c.*, u.username AS author_username
+         FROM comments c
+         JOIN users u ON u.id = c.author_id
+         WHERE c.ticket_id = ${request.params.id}
+         ORDER BY c.created_at ASC`,
+      );
+      response.render('tickets/detail', { ticket, comments: comments.rows });
     } catch (error) {
       next(error);
     }
