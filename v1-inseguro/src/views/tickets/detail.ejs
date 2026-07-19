@@ -47,7 +47,7 @@
       <!-- Comments Section Card -->
       <div class="card">
         <div class="card-header">
-          <h2 class="card-title">💬 Comments</h2>
+          <h2 class="card-title flex-align-center gap-sm"><i data-lucide="message-square"></i> Comments</h2>
         </div>
         <div class="card-body">
           <% if (comments.length === 0) { %>
@@ -55,7 +55,7 @@
           <% } %>
           <% comments.forEach((comment) => { %>
             <article class="comment-card">
-              <p class="comment-author">👤 <%= comment.author_username %></p>
+              <p class="comment-author flex-align-center gap-sm"><i data-lucide="user" style="width: 15px; height: 15px;"></i> <%= comment.author_username %></p>
               <!-- [VULN-002][A03:XSS-Stored][CWE-79] Comment bodies are deliberately rendered without escaping. -->
               <div class="comment-body"><%- comment.body %></div>
             </article>
@@ -75,7 +75,7 @@
       <!-- Attachments Section Card -->
       <div class="card">
         <div class="card-header">
-          <h2 class="card-title">📎 Attachments</h2>
+          <h2 class="card-title flex-align-center gap-sm"><i data-lucide="paperclip"></i> Attachments</h2>
         </div>
         <div class="card-body">
           <% if (attachments.length === 0) { %>
@@ -84,7 +84,7 @@
             <ul style="list-style: none; padding: 0;" class="mb-4">
               <% attachments.forEach((attachment) => { %>
                 <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: 0.5rem;">
-                  📄 <a href="/<%= attachment.storage_path %>" style="font-weight: 500;"><%= attachment.original_name %></a>
+                  <i data-lucide="file-text" style="width: 16px; height: 16px; color: var(--color-text-muted);"></i> <a href="/<%= attachment.storage_path %>" style="font-weight: 500;"><%= attachment.original_name %></a>
                 </li>
               <% }) %>
             </ul>

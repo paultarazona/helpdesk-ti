@@ -81,6 +81,18 @@
   --transition-normal: all 0.25s ease-in-out;
 }
 
+/* Lucide Icon Alignment */
+[data-lucide], .lucide {
+  vertical-align: -0.18em;
+  stroke-width: 2px;
+  display: inline-block;
+}
+
+.card-title [data-lucide],
+.card-title .lucide {
+  color: var(--color-primary);
+}
+
 /* --------------------------------------------------------------------------
    2. BASE RESETS & GLOBAL STYLES
    -------------------------------------------------------------------------- */

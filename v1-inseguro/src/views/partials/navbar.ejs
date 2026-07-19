@@ -2,7 +2,7 @@
   <div class="container">
     <nav class="navbar">
       <a href="<%= typeof user !== 'undefined' && user ? '/dashboard' : '/' %>" class="nav-brand">
-        <span class="nav-brand-icon">H</span>
+        <span class="nav-brand-icon"><i data-lucide="headset" style="width: 18px; height: 18px;"></i></span>
         <span>IT Helpdesk</span>
       </a>
 
@@ -15,7 +15,7 @@
         </ul>
         <div class="nav-user">
           <div class="user-pill">
-            <span>👤 <%= user.username %></span>
+            <span><i data-lucide="user" style="width: 15px; height: 15px; margin-right: 3px;"></i> <%= user.username %></span>
             <span class="user-role-tag"><%= user.role %></span>
           </div>
           <form method="post" action="/logout" style="display: inline-block; margin: 0;">
