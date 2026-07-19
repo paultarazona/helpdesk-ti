@@ -13,6 +13,28 @@
   if (typeof lucide !== 'undefined') {
     lucide.createIcons();
   }
+
+  // Reveal footer when user scrolls down
+  document.addEventListener('DOMContentLoaded', function() {
+    const footer = document.querySelector('.app-footer');
+    if (!footer) return;
+
+    function checkScroll() {
+      const scrollY = window.scrollY || window.pageYOffset;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+
+      // Show footer if user scrolled down (>40px) or reached document bottom
+      if (scrollY > 40 || (scrollY + windowHeight >= docHeight - 20)) {
+        footer.classList.add('footer-visible');
+      } else {
+        footer.classList.remove('footer-visible');
+      }
+    }
+
+    window.addEventListener('scroll', checkScroll, { passive: true });
+    checkScroll();
+  });
 </script>
 </body>
 </html>
