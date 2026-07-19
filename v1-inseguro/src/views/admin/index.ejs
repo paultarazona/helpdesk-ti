@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Administration | IT Helpdesk</title>
+  </head>
+  <body>
+    <main>
+      <p><a href="/dashboard">Back to dashboard</a></p>
+      <h1>Administration</h1>
+      <section>
+        <h2>User accounts</h2>
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Username</th><th>Email</th><th>Role</th></tr>
+          </thead>
+          <tbody>
+            <% users.forEach((user) => { %>
+              <tr><td><%= user.id %></td><td><%= user.username %></td><td><%= user.email %></td><td><%= user.role %></td></tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>
