@@ -6,6 +6,7 @@ const { createAttachmentsRouter } = require('./modules/attachments/routes');
 const { createAuthRouter } = require('./modules/auth/routes');
 const { createAssetsRouter } = require('./modules/assets/routes');
 const { createCommentsRouter } = require('./modules/comments/routes');
+const { createDiagnosticsRouter } = require('./modules/diagnostics/routes');
 const { createTicketsRouter } = require('./modules/tickets/routes');
 
 const app = express();
@@ -24,6 +25,7 @@ app.use('/assets', requireAuth, createAssetsRouter());
 app.use('/tickets', requireAuth, createAttachmentsRouter());
 app.use('/tickets', requireAuth, createCommentsRouter());
 app.use('/tickets', requireAuth, createTicketsRouter());
+app.use('/diagnostics', requireAuth, createDiagnosticsRouter());
 
 app.get('/', (_request, response) => {
   response.render('home');
