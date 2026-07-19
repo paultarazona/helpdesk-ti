@@ -29,6 +29,9 @@ function createTicketsApp(database) {
     next();
   });
   app.use('/tickets', createTicketsRouter(database));
+  app.use((error, _request, response, _next) => {
+    response.status(500).send(error.message);
+  });
   return app;
 }
 
@@ -91,4 +94,73 @@ test('ticket mutations use the authenticated user only for creation and require 
   assert.equal(closeResponse.status, 302);
   assert.equal(closeResponse.headers.location, '/tickets/2');
   assert.doesNotMatch(queries[1].sql, /requester_id\s*=/);
+});
+
+test('ticket form, edit, update, and delete routes operate by the supplied ticket id', async () => {
+  const queries = [];
+  const app = createTicketsApp({
+    query: async (sql, values) => {
+      queries.push({ sql, values });
+
+      if (sql.includes('SELECT id, name FROM assets')) {
+        return { rows: [{ id: 2, name: 'Bob File Server' }] };
+      }
+
+      if (sql.includes('SELECT * FROM tickets')) {
+        return { rows: [ticketFixture()] };
+      }
+
+      return { rows: [] };
+    }
+  });
+
+  const newResponse = await request(app).get('/tickets/new');
+  const editResponse = await request(app).get('/tickets/2/edit');
+  const updateResponse = await request(app)
+    .post('/tickets/2')
+    .type('form')
+    .send({ subject: 'Changed', description: 'Changed description', status: 'in_progress', priority: 'critical', assetId: '2' });
+  const deleteResponse = await request(app).post('/tickets/2/delete');
+
+  assert.equal(newResponse.status, 200);
+  assert.match(newResponse.text, /Create ticket/);
+  assert.equal(editResponse.status, 200);
+  assert.match(editResponse.text, /Edit ticket/);
+  assert.equal(updateResponse.headers.location, '/tickets/2');
+  assert.equal(deleteResponse.headers.location, '/tickets');
+  assert.match(queries.at(-2).sql, /WHERE id = \$6/);
+  assert.match(queries.at(-1).sql, /DELETE FROM tickets WHERE id = 2/);
+});
+
+test('ticket list supports empty filters and missing ticket IDs return 404', async () => {
+  const app = createTicketsApp({ query: async () => ({ rows: [] }) });
+
+  const [listResponse, detailResponse, editResponse] = await Promise.all([
+    request(app).get('/tickets'),
+    request(app).get('/tickets/999'),
+    request(app).get('/tickets/999/edit')
+  ]);
+
+  assert.equal(listResponse.status, 200);
+  assert.equal(detailResponse.status, 404);
+  assert.equal(editResponse.status, 404);
+});
+
+test('ticket routes delegate database failures to the error handler', async () => {
+  const app = createTicketsApp({ query: async () => { throw new Error('database unavailable'); } });
+  const responses = await Promise.all([
+    request(app).get('/tickets'),
+    request(app).get('/tickets/new'),
+    request(app).post('/tickets').type('form').send({}),
+    request(app).get('/tickets/2/edit'),
+    request(app).post('/tickets/2').type('form').send({}),
+    request(app).post('/tickets/2/close'),
+    request(app).post('/tickets/2/delete'),
+    request(app).get('/tickets/2')
+  ]);
+
+  for (const response of responses) {
+    assert.equal(response.status, 500);
+    assert.match(response.text, /database unavailable/);
+  }
 });

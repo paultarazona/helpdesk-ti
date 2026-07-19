@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= heading %> | IT Helpdesk</title>
+  </head>
+  <body>
+    <main>
+      <h1><%= heading %></h1>
+      <form method="post" action="<%= action %>">
+        <!-- [VULN-005][A01:CSRF][CWE-352] Deliberately no CSRF token in v1. -->
+        <label>Subject <input name="subject" value="<%= ticket.subject || '' %>" required></label>
+        <label>Description <textarea name="description" required><%= ticket.description || '' %></textarea></label>
+        <label>Status <input name="status" value="<%= ticket.status || 'open' %>"></label>
+        <label>Priority <input name="priority" value="<%= ticket.priority || 'medium' %>"></label>
+        <label>Asset
+          <select name="assetId">
+            <option value="">No asset</option>
+            <% assets.forEach((asset) => { %>
+              <option value="<%= asset.id %>" <%= String(ticket.asset_id) === String(asset.id) ? 'selected' : '' %>><%= asset.name %></option>
+            <% }) %>
+          </select>
+        </label>
+        <button type="submit">Save ticket</button>
+      </form>
+      <p><a href="/tickets">Back to tickets</a></p>
+    </main>
+  </body>
+</html>

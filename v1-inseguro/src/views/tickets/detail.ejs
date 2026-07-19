@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= ticket.subject %> | IT Helpdesk</title>
+  </head>
+  <body>
+    <main>
+      <p><a href="/tickets">Back to tickets</a></p>
+      <h1><%= ticket.subject %></h1>
+      <p>Status: <%= ticket.status %> | Priority: <%= ticket.priority %></p>
+      <p>Requester: <%= ticket.requester_username %></p>
+      <% if (ticket.asset_name) { %><p>Asset: <%= ticket.asset_name %></p><% } %>
+      <!-- [VULN-002][A03:XSS-Stored][CWE-79] Ticket description is intentionally rendered without escaping. -->
+      <section><%- ticket.description %></section>
+      <p><a href="/tickets/<%= ticket.id %>/edit">Edit ticket</a></p>
+      <form method="post" action="/tickets/<%= ticket.id %>/close">
+        <!-- [VULN-005][A01:CSRF][CWE-352] Deliberately no CSRF token in v1. -->
+        <button type="submit">Close ticket</button>
+      </form>
+      <form method="post" action="/tickets/<%= ticket.id %>/delete">
+        <button type="submit">Delete ticket</button>
+      </form>
+    </main>
+  </body>
+</html>

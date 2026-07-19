@@ -3,6 +3,7 @@ const cors = require('cors');
 const express = require('express');
 const { requireAuth } = require('./core/middleware/auth');
 const { createAuthRouter } = require('./modules/auth/routes');
+const { createTicketsRouter } = require('./modules/tickets/routes');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 // [VULN-012][A05:Security-Misconfiguration][CWE-942] v1 accepts every origin.
 app.use(cors({ origin: '*' }));
 app.use(createAuthRouter());
+app.use('/tickets', requireAuth, createTicketsRouter());
 
 app.get('/', (_request, response) => {
   response.render('home');

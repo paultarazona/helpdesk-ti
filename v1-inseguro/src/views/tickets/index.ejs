@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tickets | IT Helpdesk</title>
+  </head>
+  <body>
+    <main>
+      <h1>Tickets</h1>
+      <p><a href="/dashboard">Dashboard</a> <a href="/tickets/new">Create ticket</a></p>
+      <form method="get" action="/tickets">
+        <label>Search <input name="search" value="<%= search %>"></label>
+        <label>Status <input name="status" value="<%= status %>"></label>
+        <label>Priority <input name="priority" value="<%= priority %>"></label>
+        <button type="submit">Filter</button>
+      </form>
+      <% if (search) { %>
+        <!-- [VULN-003][A03:XSS-Reflected][CWE-79] The search text is intentionally unescaped in v1. -->
+        <p>Search results for: <%- search %></p>
+      <% } %>
+      <ul>
+        <% tickets.forEach((ticket) => { %>
+          <li>
+            <a href="/tickets/<%= ticket.id %>"><%= ticket.subject %></a>
+            <span><%= ticket.status %> / <%= ticket.priority %></span>
+            <span>Requested by <%= ticket.requester_username %></span>
+          </li>
+        <% }) %>
+      </ul>
+    </main>
+  </body>
+</html>
