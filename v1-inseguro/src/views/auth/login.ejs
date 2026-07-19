@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Log in | IT Helpdesk</title>
+  </head>
+  <body>
+    <main>
+      <h1>IT Helpdesk Login</h1>
+      <% if (typeof error !== 'undefined') { %>
+        <p><%= error %></p>
+      <% } %>
+      <form method="post" action="/login">
+        <label>Username <input name="username" required></label>
+        <label>Password <input name="password" type="password" required></label>
+        <button type="submit">Log in</button>
+      </form>
+      <p><a href="/register">Create an account</a></p>
+    </main>
+  </body>
+</html>

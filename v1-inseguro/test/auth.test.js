@@ -1,4 +1,5 @@
 const assert = require('node:assert/strict');
+const path = require('node:path');
 const test = require('node:test');
 const express = require('express');
 const jwt = require('jsonwebtoken');
@@ -10,6 +11,8 @@ const { requireAuth } = require('../src/core/middleware/auth');
 
 function createTestApp(database) {
   const app = express();
+  app.set('view engine', 'ejs');
+  app.set('views', path.join(__dirname, '..', 'src', 'views'));
   app.use(express.urlencoded({ extended: false }));
   app.use(createAuthRouter(database));
   app.get('/protected', requireAuth, (request, response) => {
@@ -17,6 +20,20 @@ function createTestApp(database) {
   });
   return app;
 }
+
+test('registration and login forms render', async () => {
+  const app = createTestApp({ query: async () => ({ rows: [] }) });
+
+  const [registerResponse, loginResponse] = await Promise.all([
+    request(app).get('/register'),
+    request(app).get('/login')
+  ]);
+
+  assert.equal(registerResponse.status, 200);
+  assert.match(registerResponse.text, /Register for IT Helpdesk/);
+  assert.equal(loginResponse.status, 200);
+  assert.match(loginResponse.text, /IT Helpdesk Login/);
+});
 
 test('registration persists the submitted plaintext password', async () => {
   const queries = [];
@@ -60,6 +77,18 @@ test('login concatenates user input and issues a JWT without expiry', async () =
   assert.equal(jwt.decode(token).exp, undefined);
 });
 
+test('login returns to its form when no user matches', async () => {
+  const app = createTestApp({ query: async () => ({ rows: [] }) });
+
+  const response = await request(app)
+    .post('/login')
+    .type('form')
+    .send({ username: 'unknown', password: 'wrong' });
+
+  assert.equal(response.status, 401);
+  assert.match(response.text, /Invalid credentials/);
+});
+
 test('a valid JWT cookie grants access to protected routes', async () => {
   const app = createTestApp({ query: async () => ({ rows: [] }) });
   const token = jwt.sign({ id: 1, username: 'alice', role: 'user' }, config.jwtSecret);
@@ -68,4 +97,28 @@ test('a valid JWT cookie grants access to protected routes', async () => {
 
   assert.equal(response.status, 200);
   assert.equal(response.body.user.username, 'alice');
+});
+
+test('missing or invalid cookies redirect protected requests to login', async () => {
+  const app = createTestApp({ query: async () => ({ rows: [] }) });
+
+  const [missingCookie, invalidCookie] = await Promise.all([
+    request(app).get('/protected'),
+    request(app).get('/protected').set('Cookie', 'token=invalid')
+  ]);
+
+  assert.equal(missingCookie.status, 302);
+  assert.equal(missingCookie.headers.location, '/login');
+  assert.equal(invalidCookie.status, 302);
+  assert.equal(invalidCookie.headers.location, '/login');
+});
+
+test('logout clears the JWT cookie', async () => {
+  const app = createTestApp({ query: async () => ({ rows: [] }) });
+
+  const response = await request(app).post('/logout');
+
+  assert.equal(response.status, 302);
+  assert.equal(response.headers.location, '/login');
+  assert.match(response.headers['set-cookie'][0], /token=;/);
 });
