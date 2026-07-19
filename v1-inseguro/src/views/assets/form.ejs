@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= heading %> | IT Helpdesk</title>
+  </head>
+  <body>
+    <main>
+      <h1><%= heading %></h1>
+      <form method="post" action="<%= action %>">
+        <label>Name <input name="name" value="<%= asset.name || '' %>" required></label>
+        <label>Type <input name="assetType" value="<%= asset.asset_type || '' %>" required></label>
+        <label>IP address <input name="ipAddress" value="<%= asset.ip_address || '' %>"></label>
+        <label>Assigned user
+          <select name="assignedToUserId">
+            <option value="">Unassigned</option>
+            <% users.forEach((user) => { %>
+              <option value="<%= user.id %>" <%= String(asset.assigned_to_user_id) === String(user.id) ? 'selected' : '' %>><%= user.username %></option>
+            <% }) %>
+          </select>
+        </label>
+        <button type="submit">Save asset</button>
+      </form>
+      <p><a href="/assets">Back to assets</a></p>
+    </main>
+  </body>
+</html>

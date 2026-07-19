@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= asset.name %> | IT Helpdesk</title>
+  </head>
+  <body>
+    <main>
+      <p><a href="/assets">Back to assets</a></p>
+      <h1><%= asset.name %></h1>
+      <p>Type: <%= asset.asset_type %></p>
+      <p>IP address: <%= asset.ip_address || 'Not configured' %></p>
+      <p>Assigned user: <%= asset.assigned_username || 'Unassigned' %></p>
+      <p>Created by: <%= asset.created_by_username || 'Unknown' %></p>
+      <p><a href="/assets/<%= asset.id %>/edit">Edit asset</a></p>
+      <form method="post" action="/assets/<%= asset.id %>/delete">
+        <button type="submit">Delete asset</button>
+      </form>
+      <section>
+        <h2>Related tickets</h2>
+        <ul>
+          <% tickets.forEach((ticket) => { %>
+            <li><a href="/tickets/<%= ticket.id %>"><%= ticket.subject %></a> (<%= ticket.status %> / <%= ticket.priority %>)</li>
+          <% }) %>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>

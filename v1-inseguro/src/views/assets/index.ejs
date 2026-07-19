@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Assets | IT Helpdesk</title>
+  </head>
+  <body>
+    <main>
+      <h1>Assets</h1>
+      <p><a href="/dashboard">Dashboard</a> <a href="/assets/new">Create asset</a></p>
+      <form method="get" action="/assets">
+        <label>Search by name or IP <input name="search" value="<%= search %>"></label>
+        <button type="submit">Search</button>
+      </form>
+      <ul>
+        <% assets.forEach((asset) => { %>
+          <li>
+            <a href="/assets/<%= asset.id %>"><%= asset.name %></a>
+            <span><%= asset.asset_type %> / <%= asset.ip_address || 'No IP' %></span>
+            <span>Assigned to <%= asset.assigned_username || 'Unassigned' %></span>
+          </li>
+        <% }) %>
+      </ul>
+    </main>
+  </body>
+</html>
