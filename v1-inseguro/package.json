@@ -6,6 +6,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
+    "db:setup": "node scripts/setup-db.js",
     "test": "node --test",
     "test:coverage": "node --test --experimental-test-coverage"
   },
