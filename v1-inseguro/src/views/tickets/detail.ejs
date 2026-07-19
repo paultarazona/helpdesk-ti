@@ -1,56 +1,111 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%= ticket.subject %> | IT Helpdesk</title>
-  </head>
-  <body>
-    <main>
-      <p><a href="/tickets">Back to tickets</a></p>
-      <h1><%= ticket.subject %></h1>
-      <p>Status: <%= ticket.status %> | Priority: <%= ticket.priority %></p>
-      <p>Requester: <%= ticket.requester_username %></p>
-      <% if (ticket.asset_name) { %><p>Asset: <%= ticket.asset_name %></p><% } %>
-      <!-- [VULN-002][A03:XSS-Stored][CWE-79] Ticket description is intentionally rendered without escaping. -->
-      <section><%- ticket.description %></section>
-      <p><a href="/tickets/<%= ticket.id %>/edit">Edit ticket</a></p>
-      <form method="post" action="/tickets/<%= ticket.id %>/close">
-        <!-- [VULN-005][A01:CSRF][CWE-352] Deliberately no CSRF token in v1. -->
-        <button type="submit">Close ticket</button>
-      </form>
-      <form method="post" action="/tickets/<%= ticket.id %>/delete">
-        <button type="submit">Delete ticket</button>
-      </form>
-      <section>
-        <h2>Comments</h2>
-        <% comments.forEach((comment) => { %>
-          <article>
-            <p><strong><%= comment.author_username %></strong></p>
-            <!-- [VULN-002][A03:XSS-Stored][CWE-79] Comment bodies are deliberately rendered without escaping. -->
-            <div><%- comment.body %></div>
-          </article>
-        <% }) %>
-        <form method="post" action="/tickets/<%= ticket.id %>/comments">
-          <!-- [VULN-005][A01:CSRF][CWE-352] Deliberately no CSRF token in v1. -->
-          <label>Comment <textarea name="body" required></textarea></label>
-          <button type="submit">Add comment</button>
-        </form>
-      </section>
-      <section>
-        <h2>Attachments</h2>
-        <ul>
-          <% attachments.forEach((attachment) => { %>
-            <li><a href="/<%= attachment.storage_path %>"><%= attachment.original_name %></a></li>
+<%- include('../partials/header', { title: ticket.subject }) %>
+<%- include('../partials/navbar') %>
+
+<main class="main-content">
+  <div class="container">
+    <div class="mb-3">
+      <a href="/tickets" class="btn btn-sm btn-outline">← Back to tickets</a>
+    </div>
+
+    <!-- Ticket Detail Header Card -->
+    <div class="card mb-4">
+      <div class="card-header flex-between">
+        <div>
+          <h1 class="card-title"><%= ticket.subject %></h1>
+          <p class="text-muted" style="margin: 0.25rem 0 0 0;">
+            Requested by <strong><%= ticket.requester_username %></strong>
+            <% if (ticket.asset_name) { %>
+              | Asset: <strong><%= ticket.asset_name %></strong>
+            <% } %>
+          </p>
+        </div>
+        <div class="flex gap-sm">
+          <span class="badge badge-<%= ticket.status %>"><%= ticket.status %></span>
+          <span class="badge badge-<%= ticket.priority %>"><%= ticket.priority %></span>
+        </div>
+      </div>
+      <div class="card-body">
+        <!-- [VULN-002][A03:XSS-Stored][CWE-79] Ticket description is intentionally rendered without escaping. -->
+        <section class="mb-4" style="background-color: var(--color-bg-app); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--color-border);"><%- ticket.description %></section>
+
+        <div class="flex flex-wrap gap-md align-items-center">
+          <a href="/tickets/<%= ticket.id %>/edit" class="btn btn-secondary">Edit ticket</a>
+
+          <form method="post" action="/tickets/<%= ticket.id %>/close" style="display: inline-block; margin: 0;">
+            <!-- [VULN-005][A01:CSRF][CWE-352] Deliberately no CSRF token in v1. -->
+            <button type="submit" class="btn btn-outline">Close ticket</button>
+          </form>
+
+          <form method="post" action="/tickets/<%= ticket.id %>/delete" style="display: inline-block; margin: 0;">
+            <button type="submit" class="btn btn-danger">Delete ticket</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <!-- Comments Section Card -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">💬 Comments</h2>
+        </div>
+        <div class="card-body">
+          <% if (comments.length === 0) { %>
+            <p class="text-muted">No comments yet.</p>
+          <% } %>
+          <% comments.forEach((comment) => { %>
+            <article class="comment-card">
+              <p class="comment-author">👤 <%= comment.author_username %></p>
+              <!-- [VULN-002][A03:XSS-Stored][CWE-79] Comment bodies are deliberately rendered without escaping. -->
+              <div class="comment-body"><%- comment.body %></div>
+            </article>
           <% }) %>
-        </ul>
-        <form method="post" action="/tickets/<%= ticket.id %>/attachments" enctype="multipart/form-data">
-          <!-- [VULN-006][A05:Unrestricted-Upload][CWE-434] Arbitrary public uploads are accepted in v1. -->
-          <label>Attachment <input type="file" name="attachment" required></label>
-          <label>Storage path <input name="storagePath"></label>
-          <button type="submit">Upload attachment</button>
-        </form>
-      </section>
-    </main>
-  </body>
-</html>
+
+          <form method="post" action="/tickets/<%= ticket.id %>/comments" class="mt-4">
+            <!-- [VULN-005][A01:CSRF][CWE-352] Deliberately no CSRF token in v1. -->
+            <div class="form-group">
+              <label class="form-label">Add Comment</label>
+              <textarea class="form-control" name="body" rows="3" required placeholder="Type your comment..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Add comment</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Attachments Section Card -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">📎 Attachments</h2>
+        </div>
+        <div class="card-body">
+          <% if (attachments.length === 0) { %>
+            <p class="text-muted mb-3">No files attached.</p>
+          <% } else { %>
+            <ul style="list-style: none; padding: 0;" class="mb-4">
+              <% attachments.forEach((attachment) => { %>
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--color-border); display: flex; align-items: center; gap: 0.5rem;">
+                  📄 <a href="/<%= attachment.storage_path %>" style="font-weight: 500;"><%= attachment.original_name %></a>
+                </li>
+              <% }) %>
+            </ul>
+          <% } %>
+
+          <form method="post" action="/tickets/<%= ticket.id %>/attachments" enctype="multipart/form-data" class="mt-4">
+            <!-- [VULN-006][A05:Unrestricted-Upload][CWE-434] Arbitrary public uploads are accepted in v1. -->
+            <div class="form-group">
+              <label class="form-label">Attachment file</label>
+              <input type="file" class="form-control" name="attachment" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Storage path (optional)</label>
+              <input class="form-control" name="storagePath" placeholder="Custom path...">
+            </div>
+            <button type="submit" class="btn btn-primary">Upload attachment</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

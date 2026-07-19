@@ -1,34 +1,64 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Diagnostics | IT Helpdesk</title>
-  </head>
-  <body>
-    <main>
-      <p><a href="/dashboard">Back to dashboard</a></p>
-      <h1>Network diagnostics</h1>
-      <section>
-        <h2>Ping target</h2>
-        <form method="post" action="/diagnostics/ping">
-          <label>Host or IP <input name="target" required></label>
-          <button type="submit">Run ping</button>
-        </form>
-        <% if (pingOutput) { %>
-          <pre><%= pingOutput %></pre>
-        <% } %>
-      </section>
-      <section>
-        <h2>Service health-check</h2>
-        <form method="post" action="/diagnostics/health-check">
-          <label>URL <input type="url" name="url" required></label>
-          <button type="submit">Check service</button>
-        </form>
-        <% if (healthOutput) { %>
-          <pre><%= healthOutput %></pre>
-        <% } %>
-      </section>
-    </main>
-  </body>
-</html>
+<%- include('../partials/header', { title: 'Network Diagnostics' }) %>
+<%- include('../partials/navbar') %>
+
+<main class="main-content">
+  <div class="container">
+    <div class="flex-between mb-4">
+      <div>
+        <h1>Network Diagnostics</h1>
+        <p class="text-muted">Perform ICMP ping tests and HTTP service health checks</p>
+      </div>
+      <a href="/dashboard" class="btn btn-outline">← Back to dashboard</a>
+    </div>
+
+    <div class="grid grid-2">
+      <!-- Ping Target Card -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">📡 Ping Target</h2>
+        </div>
+        <div class="card-body">
+          <form method="post" action="/diagnostics/ping">
+            <div class="form-group">
+              <label class="form-label">Host or IP</label>
+              <input class="form-control" name="target" required placeholder="e.g. 127.0.0.1 or localhost">
+            </div>
+            <button type="submit" class="btn btn-primary">Run ping</button>
+          </form>
+
+          <% if (pingOutput) { %>
+            <div class="mt-4">
+              <p class="form-label">Diagnostic Output:</p>
+              <pre class="terminal-output"><%= pingOutput %></pre>
+            </div>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Service Health-Check Card -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">🏥 Service Health-Check</h2>
+        </div>
+        <div class="card-body">
+          <form method="post" action="/diagnostics/health-check">
+            <div class="form-group">
+              <label class="form-label">URL</label>
+              <input type="url" class="form-control" name="url" required placeholder="https://example.com">
+            </div>
+            <button type="submit" class="btn btn-primary">Check service</button>
+          </form>
+
+          <% if (healthOutput) { %>
+            <div class="mt-4">
+              <p class="form-label">Diagnostic Output:</p>
+              <pre class="terminal-output"><%= healthOutput %></pre>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

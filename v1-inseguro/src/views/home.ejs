@@ -1,16 +1,22 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IT Helpdesk Security Lab</title>
-  </head>
-  <body>
-    <main>
-      <h1>IT Helpdesk Security Lab</h1>
-      <p>This deliberately vulnerable application must run only in a local isolated environment.</p>
-      <p>Authentication, tickets, assets, comments, and diagnostics are introduced in subsequent implementation issues.</p>
-      <p><a href="/login">Log in</a> or <a href="/register">register</a> to start the lab.</p>
-    </main>
-  </body>
-</html>
+<%- include('partials/header', { title: 'Home' }) %>
+<%- include('partials/navbar') %>
+
+<main class="main-content">
+  <div class="container">
+    <div class="hero-card">
+      <h1 class="hero-title">IT Helpdesk Security Lab</h1>
+      <p class="hero-subtitle">
+        This deliberately vulnerable application must run only in a local isolated environment.
+      </p>
+      <p class="text-muted mb-4">
+        Authentication, tickets, assets, comments, and diagnostics are introduced in subsequent implementation issues.
+      </p>
+      <div class="flex flex-align-center" style="justify-content: center; gap: 1rem;">
+        <a href="/login" class="btn btn-lg btn-primary">Log in</a>
+        <a href="/register" class="btn btn-lg btn-outline">Register account</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/footer') %>

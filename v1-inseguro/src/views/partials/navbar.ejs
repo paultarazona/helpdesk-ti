@@ -1,0 +1,33 @@
+<header class="app-header">
+  <div class="container">
+    <nav class="navbar">
+      <a href="<%= typeof user !== 'undefined' && user ? '/dashboard' : '/' %>" class="nav-brand">
+        <span class="nav-brand-icon">H</span>
+        <span>IT Helpdesk</span>
+      </a>
+
+      <% if (typeof user !== 'undefined' && user) { %>
+        <ul class="nav-links">
+          <li><a href="/tickets" class="nav-link">Tickets</a></li>
+          <li><a href="/assets" class="nav-link">Assets</a></li>
+          <li><a href="/diagnostics" class="nav-link">Diagnostics</a></li>
+          <li><a href="/admin" class="nav-link">Admin</a></li>
+        </ul>
+        <div class="nav-user">
+          <div class="user-pill">
+            <span>👤 <%= user.username %></span>
+            <span class="user-role-tag"><%= user.role %></span>
+          </div>
+          <form method="post" action="/logout" style="display: inline-block; margin: 0;">
+            <button type="submit" class="btn btn-sm btn-outline">Log out</button>
+          </form>
+        </div>
+      <% } else { %>
+        <div class="nav-user">
+          <a href="/login" class="btn btn-sm btn-outline">Log in</a>
+          <a href="/register" class="btn btn-sm btn-primary">Register</a>
+        </div>
+      <% } %>
+    </nav>
+  </div>
+</header>

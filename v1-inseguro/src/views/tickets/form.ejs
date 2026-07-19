@@ -1,30 +1,50 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%= heading %> | IT Helpdesk</title>
-  </head>
-  <body>
-    <main>
-      <h1><%= heading %></h1>
-      <form method="post" action="<%= action %>">
-        <!-- [VULN-005][A01:CSRF][CWE-352] Deliberately no CSRF token in v1. -->
-        <label>Subject <input name="subject" value="<%= ticket.subject || '' %>" required></label>
-        <label>Description <textarea name="description" required><%= ticket.description || '' %></textarea></label>
-        <label>Status <input name="status" value="<%= ticket.status || 'open' %>"></label>
-        <label>Priority <input name="priority" value="<%= ticket.priority || 'medium' %>"></label>
-        <label>Asset
-          <select name="assetId">
-            <option value="">No asset</option>
-            <% assets.forEach((asset) => { %>
-              <option value="<%= asset.id %>" <%= String(ticket.asset_id) === String(asset.id) ? 'selected' : '' %>><%= asset.name %></option>
-            <% }) %>
-          </select>
-        </label>
-        <button type="submit">Save ticket</button>
-      </form>
-      <p><a href="/tickets">Back to tickets</a></p>
-    </main>
-  </body>
-</html>
+<%- include('../partials/header', { title: heading }) %>
+<%- include('../partials/navbar') %>
+
+<main class="main-content">
+  <div class="container container-narrow">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="card-title"><%= heading %></h1>
+      </div>
+      <div class="card-body">
+        <form method="post" action="<%= action %>">
+          <!-- [VULN-005][A01:CSRF][CWE-352] Deliberately no CSRF token in v1. -->
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <input class="form-control" name="subject" value="<%= ticket.subject || '' %>" required autofocus>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" name="description" rows="5" required><%= ticket.description || '' %></textarea>
+          </div>
+          <div class="grid grid-2 mb-3">
+            <div class="form-group">
+              <label class="form-label">Status</label>
+              <input class="form-control" name="status" value="<%= ticket.status || 'open' %>">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Priority</label>
+              <input class="form-control" name="priority" value="<%= ticket.priority || 'medium' %>">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Asset</label>
+            <select class="form-select" name="assetId">
+              <option value="">No asset</option>
+              <% assets.forEach((asset) => { %>
+                <option value="<%= asset.id %>" <%= String(ticket.asset_id) === String(asset.id) ? 'selected' : '' %>><%= asset.name %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save ticket</button>
+            <a href="/tickets" class="btn btn-outline">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

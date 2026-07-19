@@ -1,18 +1,72 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard | IT Helpdesk</title>
-  </head>
-  <body>
-    <main>
-      <h1>IT Helpdesk Dashboard</h1>
-      <p>Signed in as <%= user.username %> (<%= user.role %>).</p>
-      <p><a href="/tickets">View tickets</a> <a href="/assets">View assets</a> <a href="/diagnostics">Network diagnostics</a> <a href="/admin">Administration</a></p>
-      <form method="post" action="/logout">
-        <button type="submit">Log out</button>
-      </form>
-    </main>
-  </body>
-</html>
+<%- include('partials/header', { title: 'Dashboard' }) %>
+<%- include('partials/navbar') %>
+
+<main class="main-content">
+  <div class="container">
+    <div class="card mb-4" style="background: linear-gradient(135deg, #0f52ba 0%, #1a73e8 100%); color: white;">
+      <div class="flex-between">
+        <div>
+          <h1 style="color: white; margin-bottom: 0.25rem;">IT Helpdesk Dashboard</h1>
+          <p style="opacity: 0.9; margin: 0;">
+            Signed in as <strong><%= user.username %></strong> (<span style="text-transform: uppercase; font-weight: 700; font-size: 0.8rem; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px;"><%= user.role %></span>).
+          </p>
+        </div>
+        <form method="post" action="/logout" style="margin: 0;">
+          <button type="submit" class="btn btn-outline" style="color: white; border-color: rgba(255,255,255,0.4);">Log out</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="grid grid-4">
+      <div class="card card-hover">
+        <div class="card-header">
+          <h3 class="card-title">🎫 Tickets</h3>
+        </div>
+        <div class="card-body">
+          <p class="text-muted">Manage support requests, status updates, and comments.</p>
+        </div>
+        <div class="card-footer">
+          <a href="/tickets" class="btn btn-primary btn-block">View tickets</a>
+        </div>
+      </div>
+
+      <div class="card card-hover">
+        <div class="card-header">
+          <h3 class="card-title">💻 Assets</h3>
+        </div>
+        <div class="card-body">
+          <p class="text-muted">Hardware & software inventory tracking system.</p>
+        </div>
+        <div class="card-footer">
+          <a href="/assets" class="btn btn-primary btn-block">View assets</a>
+        </div>
+      </div>
+
+      <div class="card card-hover">
+        <div class="card-header">
+          <h3 class="card-title">🌐 Diagnostics</h3>
+        </div>
+        <div class="card-body">
+          <p class="text-muted">Network connectivity ping and service health checks.</p>
+        </div>
+        <div class="card-footer">
+          <a href="/diagnostics" class="btn btn-primary btn-block">Network diagnostics</a>
+        </div>
+      </div>
+
+      <div class="card card-hover">
+        <div class="card-header">
+          <h3 class="card-title">⚙️ Administration</h3>
+        </div>
+        <div class="card-body">
+          <p class="text-muted">User accounts management and system roles.</p>
+        </div>
+        <div class="card-footer">
+          <a href="/admin" class="btn btn-primary btn-block">Administration</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/footer') %>

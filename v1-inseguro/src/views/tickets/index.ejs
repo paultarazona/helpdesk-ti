@@ -1,33 +1,82 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tickets | IT Helpdesk</title>
-  </head>
-  <body>
-    <main>
-      <h1>Tickets</h1>
-      <p><a href="/dashboard">Dashboard</a> <a href="/tickets/new">Create ticket</a></p>
-      <form method="get" action="/tickets">
-        <label>Search <input name="search" value="<%= search %>"></label>
-        <label>Status <input name="status" value="<%= status %>"></label>
-        <label>Priority <input name="priority" value="<%= priority %>"></label>
-        <button type="submit">Filter</button>
+<%- include('../partials/header', { title: 'Tickets' }) %>
+<%- include('../partials/navbar') %>
+
+<main class="main-content">
+  <div class="container">
+    <div class="flex-between mb-4">
+      <div>
+        <h1>Tickets</h1>
+        <p class="text-muted">Browse and manage IT support tickets</p>
+      </div>
+      <div class="flex gap-md">
+        <a href="/dashboard" class="btn btn-outline">Dashboard</a>
+        <a href="/tickets/new" class="btn btn-primary">+ Create ticket</a>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <form method="get" action="/tickets" class="form-inline">
+        <div class="form-group">
+          <label class="form-label">Search</label>
+          <input class="form-control" name="search" value="<%= search %>" placeholder="Subject or keyword...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <input class="form-control" name="status" value="<%= status %>" placeholder="open, closed...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Priority</label>
+          <input class="form-control" name="priority" value="<%= priority %>" placeholder="low, high...">
+        </div>
+        <button type="submit" class="btn btn-secondary">Filter</button>
       </form>
-      <% if (search) { %>
-        <!-- [VULN-003][A03:XSS-Reflected][CWE-79] The search text is intentionally unescaped in v1. -->
-        <p>Search results for: <%- search %></p>
-      <% } %>
-      <ul>
-        <% tickets.forEach((ticket) => { %>
-          <li>
-            <a href="/tickets/<%= ticket.id %>"><%= ticket.subject %></a>
-            <span><%= ticket.status %> / <%= ticket.priority %></span>
-            <span>Requested by <%= ticket.requester_username %></span>
-          </li>
-        <% }) %>
-      </ul>
-    </main>
-  </body>
-</html>
+    </div>
+
+    <% if (search) { %>
+      <!-- [VULN-003][A03:XSS-Reflected][CWE-79] The search text is intentionally unescaped in v1. -->
+      <div class="alert alert-info mb-4">
+        <span>Search results for: <%- search %></span>
+      </div>
+    <% } %>
+
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Requester</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (tickets.length === 0) { %>
+            <tr>
+              <td colspan="5" class="text-center text-muted" style="padding: 2rem;">No tickets found.</td>
+            </tr>
+          <% } %>
+          <% tickets.forEach((ticket) => { %>
+            <tr>
+              <td>
+                <a href="/tickets/<%= ticket.id %>" style="font-weight: 600;"><%= ticket.subject %></a>
+              </td>
+              <td>
+                <span class="badge badge-<%= ticket.status %>"><%= ticket.status %></span>
+              </td>
+              <td>
+                <span class="badge badge-<%= ticket.priority %>"><%= ticket.priority %></span>
+              </td>
+              <td><%= ticket.requester_username %></td>
+              <td>
+                <a href="/tickets/<%= ticket.id %>" class="btn btn-sm btn-outline">View</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>

@@ -1,27 +1,67 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Assets | IT Helpdesk</title>
-  </head>
-  <body>
-    <main>
-      <h1>Assets</h1>
-      <p><a href="/dashboard">Dashboard</a> <a href="/assets/new">Create asset</a></p>
-      <form method="get" action="/assets">
-        <label>Search by name or IP <input name="search" value="<%= search %>"></label>
-        <button type="submit">Search</button>
+<%- include('../partials/header', { title: 'Assets' }) %>
+<%- include('../partials/navbar') %>
+
+<main class="main-content">
+  <div class="container">
+    <div class="flex-between mb-4">
+      <div>
+        <h1>Assets</h1>
+        <p class="text-muted">Hardware and software asset inventory</p>
+      </div>
+      <div class="flex gap-md">
+        <a href="/dashboard" class="btn btn-outline">Dashboard</a>
+        <a href="/assets/new" class="btn btn-primary">+ Create asset</a>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <form method="get" action="/assets" class="form-inline">
+        <div class="form-group" style="flex: 1;">
+          <label class="form-label">Search by name or IP</label>
+          <input class="form-control" name="search" value="<%= search %>" placeholder="Enter asset name or IP address...">
+        </div>
+        <button type="submit" class="btn btn-secondary">Search</button>
       </form>
-      <ul>
-        <% assets.forEach((asset) => { %>
-          <li>
-            <a href="/assets/<%= asset.id %>"><%= asset.name %></a>
-            <span><%= asset.asset_type %> / <%= asset.ip_address || 'No IP' %></span>
-            <span>Assigned to <%= asset.assigned_username || 'Unassigned' %></span>
-          </li>
-        <% }) %>
-      </ul>
-    </main>
-  </body>
-</html>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>IP Address</th>
+            <th>Assigned User</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (assets.length === 0) { %>
+            <tr>
+              <td colspan="5" class="text-center text-muted" style="padding: 2rem;">No assets found.</td>
+            </tr>
+          <% } %>
+          <% assets.forEach((asset) => { %>
+            <tr>
+              <td>
+                <a href="/assets/<%= asset.id %>" style="font-weight: 600;"><%= asset.name %></a>
+              </td>
+              <td>
+                <span class="badge badge-low"><%= asset.asset_type %></span>
+              </td>
+              <td>
+                <code><%= asset.ip_address || 'No IP' %></code>
+              </td>
+              <td><%= asset.assigned_username || 'Unassigned' %></td>
+              <td>
+                <a href="/assets/<%= asset.id %>" class="btn btn-sm btn-outline">Details</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>
