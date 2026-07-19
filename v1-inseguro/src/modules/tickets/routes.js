@@ -135,7 +135,16 @@ function createTicketsRouter(database = pool) {
          WHERE c.ticket_id = ${request.params.id}
          ORDER BY c.created_at ASC`,
       );
-      response.render('tickets/detail', { ticket, comments: comments.rows });
+      const attachments = await database.query(
+        `SELECT * FROM ticket_attachments
+         WHERE ticket_id = ${request.params.id}
+         ORDER BY created_at ASC`,
+      );
+      response.render('tickets/detail', {
+        ticket,
+        comments: comments.rows,
+        attachments: attachments.rows,
+      });
     } catch (error) {
       next(error);
     }

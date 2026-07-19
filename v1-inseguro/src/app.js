@@ -2,6 +2,7 @@ const path = require('node:path');
 const cors = require('cors');
 const express = require('express');
 const { requireAuth } = require('./core/middleware/auth');
+const { createAttachmentsRouter } = require('./modules/attachments/routes');
 const { createAuthRouter } = require('./modules/auth/routes');
 const { createAssetsRouter } = require('./modules/assets/routes');
 const { createCommentsRouter } = require('./modules/comments/routes');
@@ -20,6 +21,7 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(cors({ origin: '*' }));
 app.use(createAuthRouter());
 app.use('/assets', requireAuth, createAssetsRouter());
+app.use('/tickets', requireAuth, createAttachmentsRouter());
 app.use('/tickets', requireAuth, createCommentsRouter());
 app.use('/tickets', requireAuth, createTicketsRouter());
 

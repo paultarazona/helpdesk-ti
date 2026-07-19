@@ -17,6 +17,7 @@
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "jsonwebtoken": "8.5.1",
+    "multer": "^2.2.0",
     "pg": "^8.16.3"
   },
   "devDependencies": {

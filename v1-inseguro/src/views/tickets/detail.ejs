@@ -37,6 +37,20 @@
           <button type="submit">Add comment</button>
         </form>
       </section>
+      <section>
+        <h2>Attachments</h2>
+        <ul>
+          <% attachments.forEach((attachment) => { %>
+            <li><a href="/<%= attachment.storage_path %>"><%= attachment.original_name %></a></li>
+          <% }) %>
+        </ul>
+        <form method="post" action="/tickets/<%= ticket.id %>/attachments" enctype="multipart/form-data">
+          <!-- [VULN-006][A05:Unrestricted-Upload][CWE-434] Arbitrary public uploads are accepted in v1. -->
+          <label>Attachment <input type="file" name="attachment" required></label>
+          <label>Storage path <input name="storagePath"></label>
+          <button type="submit">Upload attachment</button>
+        </form>
+      </section>
     </main>
   </body>
 </html>
