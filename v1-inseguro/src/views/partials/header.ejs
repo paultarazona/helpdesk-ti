@@ -12,3 +12,21 @@
     <link rel="stylesheet" href="/css/styles.css">
   </head>
   <body class="app-viewport">
+    <% if (typeof user !== 'undefined' && user) { %>
+    <div class="app-shell">
+      <%- include('sidebar') %>
+      <div class="app-content">
+    <% } else { %>
+    <header class="top-bar">
+      <div class="container top-bar-inner">
+        <a href="/" class="brand">
+          <span class="brand-icon"><i data-lucide="headset" style="width: 18px; height: 18px;"></i></span>
+          <span>IT Helpdesk</span>
+        </a>
+        <div class="top-bar-actions">
+          <a href="/login" class="btn btn-sm btn-outline">Log in</a>
+          <a href="/register" class="btn btn-sm btn-primary">Register</a>
+        </div>
+      </div>
+    </header>
+    <% } %>

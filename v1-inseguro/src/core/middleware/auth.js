@@ -8,21 +8,32 @@ function getCookie(request, name) {
   return entry ? entry.trim().slice(name.length + 1) : null;
 }
 
-function requireAuth(request, response, next) {
+function attachUser(request, response, next) {
   const token = getCookie(request, 'token');
 
-  if (!token) {
+  request.user = null;
+
+  if (token) {
+    try {
+      // [VULN-011][A02:JWT-Insecure][CWE-327] v1 does not restrict accepted algorithms.
+      request.user = jwt.verify(token, config.jwtSecret);
+    } catch (_error) {
+      request.user = null;
+    }
+  }
+
+  response.locals.user = request.user;
+  response.locals.currentPath = request.path;
+  next();
+}
+
+function requireAuth(request, response, next) {
+  if (!request.user) {
     response.redirect('/login');
     return;
   }
 
-  try {
-    // [VULN-011][A02:JWT-Insecure][CWE-327] v1 does not restrict accepted algorithms.
-    request.user = jwt.verify(token, config.jwtSecret);
-    next();
-  } catch (_error) {
-    response.redirect('/login');
-  }
+  next();
 }
 
-module.exports = { requireAuth };
+module.exports = { attachUser, requireAuth };

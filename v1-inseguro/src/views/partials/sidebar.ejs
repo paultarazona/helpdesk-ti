@@ -1,0 +1,50 @@
+<% var path = typeof currentPath !== 'undefined' && currentPath ? currentPath : ''; %>
+<aside class="sidebar">
+  <a href="/dashboard" class="brand sidebar-brand">
+    <span class="brand-icon"><i data-lucide="headset" style="width: 18px; height: 18px;"></i></span>
+    <span>IT Helpdesk</span>
+  </a>
+
+  <ul class="sidebar-nav">
+    <li>
+      <a href="/dashboard" class="sidebar-link <%= path === '/dashboard' ? 'active' : '' %>">
+        <i data-lucide="layout-dashboard" style="width: 18px; height: 18px;"></i>
+        <span>Dashboard</span>
+      </a>
+    </li>
+    <li>
+      <a href="/tickets" class="sidebar-link <%= path.startsWith('/tickets') ? 'active' : '' %>">
+        <i data-lucide="ticket" style="width: 18px; height: 18px;"></i>
+        <span>Tickets</span>
+      </a>
+    </li>
+    <li>
+      <a href="/assets" class="sidebar-link <%= path.startsWith('/assets') ? 'active' : '' %>">
+        <i data-lucide="laptop" style="width: 18px; height: 18px;"></i>
+        <span>Assets</span>
+      </a>
+    </li>
+    <li>
+      <a href="/diagnostics" class="sidebar-link <%= path.startsWith('/diagnostics') ? 'active' : '' %>">
+        <i data-lucide="activity" style="width: 18px; height: 18px;"></i>
+        <span>Diagnostics</span>
+      </a>
+    </li>
+    <li>
+      <a href="/admin" class="sidebar-link <%= path.startsWith('/admin') ? 'active' : '' %>">
+        <i data-lucide="settings" style="width: 18px; height: 18px;"></i>
+        <span>Admin</span>
+      </a>
+    </li>
+  </ul>
+
+  <div class="sidebar-footer">
+    <div class="user-pill">
+      <span><i data-lucide="user" style="width: 15px; height: 15px; margin-right: 3px;"></i> <%= user.username %></span>
+      <span class="user-role-tag"><%= user.role %></span>
+    </div>
+    <form method="post" action="/logout" style="margin: 0;">
+      <button type="submit" class="btn btn-sm btn-outline btn-block">Log out</button>
+    </form>
+  </div>
+</aside>
