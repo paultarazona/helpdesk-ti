@@ -31,7 +31,7 @@ app.use('/tickets', requireAuth, createTicketsRouter());
 app.use('/diagnostics', requireAuth, createDiagnosticsRouter());
 
 app.get('/', (_request, response) => {
-  response.render('home');
+  response.redirect('/login');
 });
 
 app.get('/dashboard', requireAuth, (_request, response) => {
