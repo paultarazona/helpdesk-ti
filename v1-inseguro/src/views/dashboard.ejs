@@ -3,17 +3,10 @@
 <main class="main-content">
   <div class="container">
     <div class="card mb-4" style="background: linear-gradient(135deg, #0f52ba 0%, #1a73e8 100%); color: white;">
-      <div class="flex-between">
-        <div>
-          <h1 style="color: white; margin-bottom: 0.25rem;">IT Helpdesk Dashboard</h1>
-          <p style="opacity: 0.9; margin: 0;">
-            Signed in as <strong><%= user.username %></strong> (<span style="text-transform: uppercase; font-weight: 700; font-size: 0.8rem; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px;"><%= user.role %></span>).
-          </p>
-        </div>
-        <form method="post" action="/logout" style="margin: 0;">
-          <button type="submit" class="btn btn-outline" style="color: white; border-color: rgba(255,255,255,0.4);">Log out</button>
-        </form>
-      </div>
+      <h1 style="color: white; margin-bottom: 0.25rem;">IT Helpdesk Dashboard</h1>
+      <p style="opacity: 0.9; margin: 0;">
+        Signed in as <strong><%= user.username %></strong> (<span style="text-transform: uppercase; font-weight: 700; font-size: 0.8rem; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px;"><%= user.role %></span>).
+      </p>
     </div>
 
     <div class="grid grid-4">
