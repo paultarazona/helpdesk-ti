@@ -1,25 +1,25 @@
-<%- include('../partials/header', { title: 'Assets' }) %>
+<%- include('../partials/header', { title: __('assets.pageTitle') }) %>
 
 <main class="main-content">
   <div class="container">
     <div class="flex-between mb-4">
       <div>
-        <h1>Assets</h1>
-        <p class="text-muted">Hardware and software asset inventory</p>
+        <h1><%= __('assets.pageTitle') %></h1>
+        <p class="text-muted"><%= __('assets.pageSubtitle') %></p>
       </div>
       <div class="flex gap-md">
-        <a href="/dashboard" class="btn btn-outline">Dashboard</a>
-        <a href="/assets/new" class="btn btn-primary">+ Create asset</a>
+        <a href="/dashboard" class="btn btn-outline"><%= __('sidebar.dashboard') %></a>
+        <a href="/assets/new" class="btn btn-primary"><%= __('assets.createAsset') %></a>
       </div>
     </div>
 
     <div class="card mb-4">
       <form method="get" action="/assets" class="form-inline">
         <div class="form-group" style="flex: 1;">
-          <label class="form-label">Search by name or IP</label>
-          <input class="form-control" name="search" value="<%= search %>" placeholder="Enter asset name or IP address...">
+          <label class="form-label"><%= __('assets.searchByNameOrIp') %></label>
+          <input class="form-control" name="search" value="<%= search %>" placeholder="<%= __('assets.searchPlaceholder') %>">
         </div>
-        <button type="submit" class="btn btn-secondary">Search</button>
+        <button type="submit" class="btn btn-secondary"><%= __('assets.search') %></button>
       </form>
     </div>
 
@@ -27,17 +27,17 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>IP Address</th>
-            <th>Assigned User</th>
-            <th>Action</th>
+            <th><%= __('assets.colName') %></th>
+            <th><%= __('assets.colType') %></th>
+            <th><%= __('assets.colIp') %></th>
+            <th><%= __('assets.colAssignedUser') %></th>
+            <th><%= __('assets.colAction') %></th>
           </tr>
         </thead>
         <tbody>
           <% if (assets.length === 0) { %>
             <tr>
-              <td colspan="5" class="text-center text-muted" style="padding: 2rem;">No assets found.</td>
+              <td colspan="5" class="text-center text-muted" style="padding: 2rem;"><%= __('assets.noAssets') %></td>
             </tr>
           <% } %>
           <% assets.forEach((asset) => { %>
@@ -49,11 +49,11 @@
                 <span class="badge badge-low"><%= asset.asset_type %></span>
               </td>
               <td>
-                <code><%= asset.ip_address || 'No IP' %></code>
+                <code><%= asset.ip_address || __('assets.noIp') %></code>
               </td>
-              <td><%= asset.assigned_username || 'Unassigned' %></td>
+              <td><%= asset.assigned_username || __('assets.unassigned') %></td>
               <td>
-                <a href="/assets/<%= asset.id %>" class="btn btn-sm btn-outline">Details</a>
+                <a href="/assets/<%= asset.id %>" class="btn btn-sm btn-outline"><%= __('assets.details') %></a>
               </td>
             </tr>
           <% }) %>

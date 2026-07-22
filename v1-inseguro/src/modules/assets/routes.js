@@ -29,13 +29,13 @@ function createAssetsRouter(database = pool) {
     }
   });
 
-  router.get('/new', async (_request, response, next) => {
+  router.get('/new', async (request, response, next) => {
     try {
       response.render('assets/form', {
         asset: {},
         users: await getUsers(),
         action: '/assets',
-        heading: 'Create asset'
+        heading: request.__('assets.createHeading')
       });
     } catch (error) {
       next(error);
@@ -73,7 +73,7 @@ function createAssetsRouter(database = pool) {
         asset: result.rows[0],
         users: await getUsers(),
         action: `/assets/${request.params.id}`,
-        heading: 'Edit asset'
+        heading: request.__('assets.editHeading')
       });
     } catch (error) {
       next(error);

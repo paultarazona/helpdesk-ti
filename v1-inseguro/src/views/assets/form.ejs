@@ -9,29 +9,29 @@
       <div class="card-body">
         <form method="post" action="<%= action %>">
           <div class="form-group">
-            <label class="form-label">Asset Name</label>
-            <input class="form-control" name="name" value="<%= asset.name || '' %>" required autofocus placeholder="e.g. Workstation-Pro-01">
+            <label class="form-label"><%= __('assets.form.assetName') %></label>
+            <input class="form-control" name="name" value="<%= asset.name || '' %>" required autofocus placeholder="<%= __('assets.form.assetNamePlaceholder') %>">
           </div>
           <div class="form-group">
-            <label class="form-label">Asset Type</label>
-            <input class="form-control" name="assetType" value="<%= asset.asset_type || '' %>" required placeholder="e.g. Laptop, Server, Router">
+            <label class="form-label"><%= __('assets.form.assetType') %></label>
+            <input class="form-control" name="assetType" value="<%= asset.asset_type || '' %>" required placeholder="<%= __('assets.form.assetTypePlaceholder') %>">
           </div>
           <div class="form-group">
-            <label class="form-label">IP Address</label>
-            <input class="form-control" name="ipAddress" value="<%= asset.ip_address || '' %>" placeholder="e.g. 192.168.1.50">
+            <label class="form-label"><%= __('assets.ipAddress') %></label>
+            <input class="form-control" name="ipAddress" value="<%= asset.ip_address || '' %>" placeholder="<%= __('assets.form.ipAddressPlaceholder') %>">
           </div>
           <div class="form-group">
-            <label class="form-label">Assigned User</label>
+            <label class="form-label"><%= __('assets.form.assignedUser') %></label>
             <select class="form-select" name="assignedToUserId">
-              <option value="">Unassigned</option>
+              <option value=""><%= __('assets.form.unassigned') %></option>
               <% users.forEach((user) => { %>
                 <option value="<%= user.id %>" <%= String(asset.assigned_to_user_id) === String(user.id) ? 'selected' : '' %>><%= user.username %></option>
               <% }) %>
             </select>
           </div>
           <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Save asset</button>
-            <a href="/assets" class="btn btn-outline">Cancel</a>
+            <button type="submit" class="btn btn-primary"><%= __('assets.form.save') %></button>
+            <a href="/assets" class="btn btn-outline"><%= __('common.cancel') %></a>
           </div>
         </form>
       </div>

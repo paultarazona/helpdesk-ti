@@ -3,7 +3,7 @@
 <main class="main-content">
   <div class="container">
     <div class="mb-3">
-      <a href="/assets" class="btn btn-sm btn-outline">← Back to assets</a>
+      <a href="/assets" class="btn btn-sm btn-outline">← <%= __('assets.backToAssets') %></a>
     </div>
 
     <div class="grid grid-2">
@@ -15,25 +15,25 @@
             <span class="badge badge-low mt-1"><%= asset.asset_type %></span>
           </div>
           <div class="flex gap-sm">
-            <a href="/assets/<%= asset.id %>/edit" class="btn btn-secondary">Edit asset</a>
+            <a href="/assets/<%= asset.id %>/edit" class="btn btn-secondary"><%= __('assets.editAsset') %></a>
             <form method="post" action="/assets/<%= asset.id %>/delete" style="display: inline-block; margin: 0;">
-              <button type="submit" class="btn btn-danger">Delete</button>
+              <button type="submit" class="btn btn-danger"><%= __('assets.delete') %></button>
             </form>
           </div>
         </div>
         <div class="card-body">
           <div class="grid grid-2 gap-md">
             <div>
-              <p class="text-muted mb-1" style="font-size: 0.85rem;">IP Address</p>
-              <p><code><%= asset.ip_address || 'Not configured' %></code></p>
+              <p class="text-muted mb-1" style="font-size: 0.85rem;"><%= __('assets.ipAddress') %></p>
+              <p><code><%= asset.ip_address || __('assets.notConfigured') %></code></p>
             </div>
             <div>
-              <p class="text-muted mb-1" style="font-size: 0.85rem;">Assigned User</p>
-              <p><strong><%= asset.assigned_username || 'Unassigned' %></strong></p>
+              <p class="text-muted mb-1" style="font-size: 0.85rem;"><%= __('assets.assignedUser') %></p>
+              <p><strong><%= asset.assigned_username || __('assets.unassigned') %></strong></p>
             </div>
             <div>
-              <p class="text-muted mb-1" style="font-size: 0.85rem;">Created By</p>
-              <p><%= asset.created_by_username || 'Unknown' %></p>
+              <p class="text-muted mb-1" style="font-size: 0.85rem;"><%= __('assets.createdBy') %></p>
+              <p><%= asset.created_by_username || __('assets.unknown') %></p>
             </div>
           </div>
         </div>
@@ -42,11 +42,11 @@
       <!-- Related Tickets Card -->
       <div class="card">
         <div class="card-header">
-          <h2 class="card-title flex-align-center gap-sm"><i data-lucide="ticket"></i> Related Tickets</h2>
+          <h2 class="card-title flex-align-center gap-sm"><i data-lucide="ticket"></i> <%= __('assets.relatedTickets') %></h2>
         </div>
         <div class="card-body">
           <% if (tickets.length === 0) { %>
-            <p class="text-muted">No tickets linked to this asset.</p>
+            <p class="text-muted"><%= __('assets.noLinkedTickets') %></p>
           <% } else { %>
             <ul style="list-style: none; padding: 0;">
               <% tickets.forEach((ticket) => { %>

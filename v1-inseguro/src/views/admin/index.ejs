@@ -1,28 +1,28 @@
-<%- include('../partials/header', { title: 'Administration' }) %>
+<%- include('../partials/header', { title: __('admin.pageTitle') }) %>
 
 <main class="main-content">
   <div class="container">
     <div class="flex-between mb-4">
       <div>
-        <h1>Administration</h1>
-        <p class="text-muted">User accounts & privileges governance</p>
+        <h1><%= __('admin.pageTitle') %></h1>
+        <p class="text-muted"><%= __('admin.pageSubtitle') %></p>
       </div>
-      <a href="/dashboard" class="btn btn-outline">← Back to dashboard</a>
+      <a href="/dashboard" class="btn btn-outline">← <%= __('admin.backToDashboard') %></a>
     </div>
 
     <div class="card">
       <div class="card-header">
-        <h2 class="card-title flex-align-center gap-sm"><i data-lucide="users"></i> User Accounts</h2>
+        <h2 class="card-title flex-align-center gap-sm"><i data-lucide="users"></i> <%= __('admin.userAccounts') %></h2>
       </div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-hover">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Role</th>
+                <th><%= __('admin.colId') %></th>
+                <th><%= __('admin.colUsername') %></th>
+                <th><%= __('admin.colEmail') %></th>
+                <th><%= __('admin.colRole') %></th>
               </tr>
             </thead>
             <tbody>

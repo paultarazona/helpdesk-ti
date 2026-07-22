@@ -10,35 +10,35 @@
         <form method="post" action="<%= action %>">
           <!-- [VULN-005][A01:CSRF][CWE-352] Deliberately no CSRF token in v1. -->
           <div class="form-group">
-            <label class="form-label">Subject</label>
+            <label class="form-label"><%= __('tickets.form.subject') %></label>
             <input class="form-control" name="subject" value="<%= ticket.subject || '' %>" required autofocus>
           </div>
           <div class="form-group">
-            <label class="form-label">Description</label>
+            <label class="form-label"><%= __('tickets.form.description') %></label>
             <textarea class="form-control" name="description" rows="5" required><%= ticket.description || '' %></textarea>
           </div>
           <div class="grid grid-2 mb-3">
             <div class="form-group">
-              <label class="form-label">Status</label>
+              <label class="form-label"><%= __('tickets.form.status') %></label>
               <input class="form-control" name="status" value="<%= ticket.status || 'open' %>">
             </div>
             <div class="form-group">
-              <label class="form-label">Priority</label>
+              <label class="form-label"><%= __('tickets.form.priority') %></label>
               <input class="form-control" name="priority" value="<%= ticket.priority || 'medium' %>">
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Asset</label>
+            <label class="form-label"><%= __('tickets.form.asset') %></label>
             <select class="form-select" name="assetId">
-              <option value="">No asset</option>
+              <option value=""><%= __('tickets.form.noAsset') %></option>
               <% assets.forEach((asset) => { %>
                 <option value="<%= asset.id %>" <%= String(ticket.asset_id) === String(asset.id) ? 'selected' : '' %>><%= asset.name %></option>
               <% }) %>
             </select>
           </div>
           <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Save ticket</button>
-            <a href="/tickets" class="btn btn-outline">Cancel</a>
+            <button type="submit" class="btn btn-primary"><%= __('tickets.form.save') %></button>
+            <a href="/tickets" class="btn btn-outline"><%= __('common.cancel') %></a>
           </div>
         </form>
       </div>

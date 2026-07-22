@@ -1,40 +1,40 @@
-<%- include('../partials/header', { title: 'Tickets' }) %>
+<%- include('../partials/header', { title: __('tickets.pageTitle') }) %>
 
 <main class="main-content">
   <div class="container">
     <div class="flex-between mb-4">
       <div>
-        <h1>Tickets</h1>
-        <p class="text-muted">Browse and manage IT support tickets</p>
+        <h1><%= __('tickets.pageTitle') %></h1>
+        <p class="text-muted"><%= __('tickets.pageSubtitle') %></p>
       </div>
       <div class="flex gap-md">
-        <a href="/dashboard" class="btn btn-outline">Dashboard</a>
-        <a href="/tickets/new" class="btn btn-primary">+ Create ticket</a>
+        <a href="/dashboard" class="btn btn-outline"><%= __('sidebar.dashboard') %></a>
+        <a href="/tickets/new" class="btn btn-primary"><%= __('tickets.createTicket') %></a>
       </div>
     </div>
 
     <div class="card mb-4">
       <form method="get" action="/tickets" class="form-inline">
         <div class="form-group">
-          <label class="form-label">Search</label>
-          <input class="form-control" name="search" value="<%= search %>" placeholder="Subject or keyword...">
+          <label class="form-label"><%= __('tickets.searchLabel') %></label>
+          <input class="form-control" name="search" value="<%= search %>" placeholder="<%= __('tickets.searchPlaceholder') %>">
         </div>
         <div class="form-group">
-          <label class="form-label">Status</label>
-          <input class="form-control" name="status" value="<%= status %>" placeholder="open, closed...">
+          <label class="form-label"><%= __('tickets.statusLabel') %></label>
+          <input class="form-control" name="status" value="<%= status %>" placeholder="<%= __('tickets.statusPlaceholder') %>">
         </div>
         <div class="form-group">
-          <label class="form-label">Priority</label>
-          <input class="form-control" name="priority" value="<%= priority %>" placeholder="low, high...">
+          <label class="form-label"><%= __('tickets.priorityLabel') %></label>
+          <input class="form-control" name="priority" value="<%= priority %>" placeholder="<%= __('tickets.priorityPlaceholder') %>">
         </div>
-        <button type="submit" class="btn btn-secondary">Filter</button>
+        <button type="submit" class="btn btn-secondary"><%= __('tickets.filter') %></button>
       </form>
     </div>
 
     <% if (search) { %>
       <!-- [VULN-003][A03:XSS-Reflected][CWE-79] The search text is intentionally unescaped in v1. -->
       <div class="alert alert-info mb-4">
-        <span>Search results for: <%- search %></span>
+        <span><%= __('tickets.searchResultsFor') %> <%- search %></span>
       </div>
     <% } %>
 
@@ -42,17 +42,17 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>Subject</th>
-            <th>Status</th>
-            <th>Priority</th>
-            <th>Requester</th>
-            <th>Action</th>
+            <th><%= __('tickets.colSubject') %></th>
+            <th><%= __('tickets.colStatus') %></th>
+            <th><%= __('tickets.colPriority') %></th>
+            <th><%= __('tickets.colRequester') %></th>
+            <th><%= __('tickets.colAction') %></th>
           </tr>
         </thead>
         <tbody>
           <% if (tickets.length === 0) { %>
             <tr>
-              <td colspan="5" class="text-center text-muted" style="padding: 2rem;">No tickets found.</td>
+              <td colspan="5" class="text-center text-muted" style="padding: 2rem;"><%= __('tickets.noTickets') %></td>
             </tr>
           <% } %>
           <% tickets.forEach((ticket) => { %>
@@ -68,7 +68,7 @@
               </td>
               <td><%= ticket.requester_username %></td>
               <td>
-                <a href="/tickets/<%= ticket.id %>" class="btn btn-sm btn-outline">View</a>
+                <a href="/tickets/<%= ticket.id %>" class="btn btn-sm btn-outline"><%= __('tickets.view') %></a>
               </td>
             </tr>
           <% }) %>

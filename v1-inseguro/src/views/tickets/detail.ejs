@@ -3,7 +3,7 @@
 <main class="main-content">
   <div class="container">
     <div class="mb-3">
-      <a href="/tickets" class="btn btn-sm btn-outline">← Back to tickets</a>
+      <a href="/tickets" class="btn btn-sm btn-outline">← <%= __('tickets.backToTickets') %></a>
     </div>
 
     <!-- Ticket Detail Header Card -->
@@ -12,9 +12,9 @@
         <div>
           <h1 class="card-title"><%= ticket.subject %></h1>
           <p class="text-muted" style="margin: 0.25rem 0 0 0;">
-            Requested by <strong><%= ticket.requester_username %></strong>
+            <%= __('tickets.requestedBy') %> <strong><%= ticket.requester_username %></strong>
             <% if (ticket.asset_name) { %>
-              | Asset: <strong><%= ticket.asset_name %></strong>
+              | <%= __('tickets.asset') %>: <strong><%= ticket.asset_name %></strong>
             <% } %>
           </p>
         </div>
@@ -28,15 +28,15 @@
         <section class="mb-4" style="background-color: var(--color-bg-app); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--color-border);"><%- ticket.description %></section>
 
         <div class="flex flex-wrap gap-md align-items-center">
-          <a href="/tickets/<%= ticket.id %>/edit" class="btn btn-secondary">Edit ticket</a>
+          <a href="/tickets/<%= ticket.id %>/edit" class="btn btn-secondary"><%= __('tickets.editTicket') %></a>
 
           <form method="post" action="/tickets/<%= ticket.id %>/close" style="display: inline-block; margin: 0;">
             <!-- [VULN-005][A01:CSRF][CWE-352] Deliberately no CSRF token in v1. -->
-            <button type="submit" class="btn btn-outline">Close ticket</button>
+            <button type="submit" class="btn btn-outline"><%= __('tickets.closeTicket') %></button>
           </form>
 
           <form method="post" action="/tickets/<%= ticket.id %>/delete" style="display: inline-block; margin: 0;">
-            <button type="submit" class="btn btn-danger">Delete ticket</button>
+            <button type="submit" class="btn btn-danger"><%= __('tickets.deleteTicket') %></button>
           </form>
         </div>
       </div>
@@ -46,11 +46,11 @@
       <!-- Comments Section Card -->
       <div class="card">
         <div class="card-header">
-          <h2 class="card-title flex-align-center gap-sm"><i data-lucide="message-square"></i> Comments</h2>
+          <h2 class="card-title flex-align-center gap-sm"><i data-lucide="message-square"></i> <%= __('tickets.comments') %></h2>
         </div>
         <div class="card-body">
           <% if (comments.length === 0) { %>
-            <p class="text-muted">No comments yet.</p>
+            <p class="text-muted"><%= __('tickets.noComments') %></p>
           <% } %>
           <% comments.forEach((comment) => { %>
             <article class="comment-card">
@@ -63,10 +63,10 @@
           <form method="post" action="/tickets/<%= ticket.id %>/comments" class="mt-4">
             <!-- [VULN-005][A01:CSRF][CWE-352] Deliberately no CSRF token in v1. -->
             <div class="form-group">
-              <label class="form-label">Add Comment</label>
-              <textarea class="form-control" name="body" rows="3" required placeholder="Type your comment..."></textarea>
+              <label class="form-label"><%= __('tickets.addComment') %></label>
+              <textarea class="form-control" name="body" rows="3" required placeholder="<%= __('tickets.addCommentPlaceholder') %>"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Add comment</button>
+            <button type="submit" class="btn btn-primary"><%= __('tickets.addCommentButton') %></button>
           </form>
         </div>
       </div>
@@ -74,11 +74,11 @@
       <!-- Attachments Section Card -->
       <div class="card">
         <div class="card-header">
-          <h2 class="card-title flex-align-center gap-sm"><i data-lucide="paperclip"></i> Attachments</h2>
+          <h2 class="card-title flex-align-center gap-sm"><i data-lucide="paperclip"></i> <%= __('tickets.attachments') %></h2>
         </div>
         <div class="card-body">
           <% if (attachments.length === 0) { %>
-            <p class="text-muted mb-3">No files attached.</p>
+            <p class="text-muted mb-3"><%= __('tickets.noAttachments') %></p>
           <% } else { %>
             <ul style="list-style: none; padding: 0;" class="mb-4">
               <% attachments.forEach((attachment) => { %>
@@ -92,14 +92,14 @@
           <form method="post" action="/tickets/<%= ticket.id %>/attachments" enctype="multipart/form-data" class="mt-4">
             <!-- [VULN-006][A05:Unrestricted-Upload][CWE-434] Arbitrary public uploads are accepted in v1. -->
             <div class="form-group">
-              <label class="form-label">Attachment file</label>
+              <label class="form-label"><%= __('tickets.attachmentFile') %></label>
               <input type="file" class="form-control" name="attachment" required>
             </div>
             <div class="form-group">
-              <label class="form-label">Storage path (optional)</label>
-              <input class="form-control" name="storagePath" placeholder="Custom path...">
+              <label class="form-label"><%= __('tickets.storagePath') %></label>
+              <input class="form-control" name="storagePath" placeholder="<%= __('tickets.storagePathPlaceholder') %>">
             </div>
-            <button type="submit" class="btn btn-primary">Upload attachment</button>
+            <button type="submit" class="btn btn-primary"><%= __('tickets.uploadAttachment') %></button>
           </form>
         </div>
       </div>

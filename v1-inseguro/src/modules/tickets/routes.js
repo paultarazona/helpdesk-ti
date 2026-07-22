@@ -32,7 +32,7 @@ function createTicketsRouter(database = pool) {
     }
   });
 
-  router.get("/new", async (_request, response, next) => {
+  router.get("/new", async (request, response, next) => {
     try {
       const assets = await database.query(
         "SELECT id, name FROM assets ORDER BY name",
@@ -41,7 +41,7 @@ function createTicketsRouter(database = pool) {
         ticket: {},
         assets: assets.rows,
         action: "/tickets",
-        heading: "Create ticket",
+        heading: request.__('tickets.createHeading'),
       });
     } catch (error) {
       next(error);
@@ -83,7 +83,7 @@ function createTicketsRouter(database = pool) {
         ticket: ticket.rows[0],
         assets: assets.rows,
         action: `/tickets/${request.params.id}`,
-        heading: "Edit ticket",
+        heading: request.__('tickets.editHeading'),
       });
     } catch (error) {
       next(error);

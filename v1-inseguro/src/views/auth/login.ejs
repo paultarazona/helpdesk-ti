@@ -1,11 +1,11 @@
-<%- include('../partials/header', { title: 'Log in' }) %>
+<%- include('../partials/header', { title: __('auth.loginTitle') }) %>
 
 <main class="main-content">
   <div class="container container-narrow">
     <div class="card">
       <div class="card-header text-center" style="display: block;">
-        <h1 class="card-title" style="justify-content: center;">IT Helpdesk Login</h1>
-        <p class="text-muted" style="margin-top: 0.25rem;">Sign in to access support portal</p>
+        <h1 class="card-title" style="justify-content: center;"><%= __('auth.loginTitle') %></h1>
+        <p class="text-muted" style="margin-top: 0.25rem;"><%= __('auth.loginSubtitle') %></p>
       </div>
       <div class="card-body">
         <% if (typeof error !== 'undefined') { %>
@@ -15,19 +15,19 @@
         <% } %>
         <form method="post" action="/login">
           <div class="form-group">
-            <label class="form-label">Username</label>
+            <label class="form-label"><%= __('auth.username') %></label>
             <input class="form-control" name="username" required autofocus>
           </div>
           <div class="form-group">
-            <label class="form-label">Password</label>
+            <label class="form-label"><%= __('auth.password') %></label>
             <input class="form-control" name="password" type="password" required>
           </div>
-          <button type="submit" class="btn btn-primary btn-block btn-lg">Log in</button>
+          <button type="submit" class="btn btn-primary btn-block btn-lg"><%= __('auth.loginButton') %></button>
         </form>
       </div>
       <div class="card-footer text-center">
         <p class="text-muted" style="margin: 0;">
-          Need an account? <a href="/register">Create an account</a>
+          <%= __('auth.needAccount') %> <a href="/register"><%= __('auth.createAccount') %></a>
         </p>
       </div>
     </div>

@@ -2,51 +2,54 @@
 <aside class="sidebar">
   <a href="/dashboard" class="brand sidebar-brand">
     <span class="brand-icon"><i data-lucide="headset" style="width: 18px; height: 18px;"></i></span>
-    <span>IT Helpdesk</span>
+    <span><%= __('common.appName') %></span>
   </a>
 
   <ul class="sidebar-nav">
     <li>
       <a href="/dashboard" class="sidebar-link <%= path === '/dashboard' ? 'active' : '' %>">
         <i data-lucide="layout-dashboard" style="width: 18px; height: 18px;"></i>
-        <span>Dashboard</span>
+        <span><%= __('sidebar.dashboard') %></span>
       </a>
     </li>
     <li>
       <a href="/tickets" class="sidebar-link <%= path.startsWith('/tickets') ? 'active' : '' %>">
         <i data-lucide="ticket" style="width: 18px; height: 18px;"></i>
-        <span>Tickets</span>
+        <span><%= __('sidebar.tickets') %></span>
       </a>
     </li>
     <li>
       <a href="/assets" class="sidebar-link <%= path.startsWith('/assets') ? 'active' : '' %>">
         <i data-lucide="laptop" style="width: 18px; height: 18px;"></i>
-        <span>Assets</span>
+        <span><%= __('sidebar.assets') %></span>
       </a>
     </li>
     <li>
       <a href="/diagnostics" class="sidebar-link <%= path.startsWith('/diagnostics') ? 'active' : '' %>">
         <i data-lucide="activity" style="width: 18px; height: 18px;"></i>
-        <span>Diagnostics</span>
+        <span><%= __('sidebar.diagnostics') %></span>
       </a>
     </li>
     <li>
       <a href="/admin" class="sidebar-link <%= path.startsWith('/admin') ? 'active' : '' %>">
         <i data-lucide="settings" style="width: 18px; height: 18px;"></i>
-        <span>Admin</span>
+        <span><%= __('sidebar.admin') %></span>
       </a>
     </li>
   </ul>
 
   <div class="sidebar-footer">
-    <div class="user-pill">
-      <span><i data-lucide="user" style="width: 15px; height: 15px; margin-right: 3px;"></i> <%= user.username %></span>
-      <span class="user-role-tag"><%= user.role %></span>
+    <%- include('lang-switcher') %>
+    <div class="sidebar-footer-row">
+      <div class="user-pill">
+        <span><i data-lucide="user" style="width: 15px; height: 15px; margin-right: 3px;"></i> <%= user.username %></span>
+        <span class="user-role-tag"><%= user.role %></span>
+      </div>
+      <form method="post" action="/logout" style="margin: 0;">
+        <button type="submit" class="icon-btn" title="<%= __('sidebar.logout') %>" aria-label="<%= __('sidebar.logout') %>">
+          <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
+        </button>
+      </form>
     </div>
-    <form method="post" action="/logout" style="margin: 0;">
-      <button type="submit" class="icon-btn" title="Log out" aria-label="Log out">
-        <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
-      </button>
-    </form>
   </div>
 </aside>

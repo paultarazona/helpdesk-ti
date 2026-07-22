@@ -40,7 +40,7 @@ function createAuthRouter(database = pool) {
       const user = result.rows[0];
 
       if (!user) {
-        response.status(401).render('auth/login', { error: 'Invalid credentials' });
+        response.status(401).render('auth/login', { error: request.__('auth.invalidCredentials') });
         return;
       }
 

@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="<%= typeof locale !== 'undefined' ? locale : 'en' %>">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%= typeof title !== 'undefined' ? title + ' | IT Helpdesk' : 'IT Helpdesk Security Lab' %></title>
+    <title><%= typeof title !== 'undefined' ? title + ' | ' + __('common.appName') : __('common.appName') %></title>
     <!-- Google Fonts: Inter & Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,11 +21,12 @@
       <div class="container top-bar-inner">
         <a href="/login" class="brand">
           <span class="brand-icon"><i data-lucide="headset" style="width: 18px; height: 18px;"></i></span>
-          <span>IT Helpdesk</span>
+          <span><%= __('common.appName') %></span>
         </a>
         <div class="top-bar-actions">
-          <a href="/login" class="btn btn-sm btn-outline">Log in</a>
-          <a href="/register" class="btn btn-sm btn-primary">Register</a>
+          <%- include('lang-switcher') %>
+          <a href="/login" class="btn btn-sm btn-outline"><%= __('topbar.login') %></a>
+          <a href="/register" class="btn btn-sm btn-primary"><%= __('topbar.register') %></a>
         </div>
       </div>
     </header>

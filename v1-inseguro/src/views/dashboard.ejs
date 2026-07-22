@@ -1,60 +1,60 @@
-<%- include('partials/header', { title: 'Dashboard' }) %>
+<%- include('partials/header', { title: __('dashboard.title') }) %>
 
 <main class="main-content">
   <div class="container">
     <div class="card mb-4" style="background: linear-gradient(135deg, #0f52ba 0%, #1a73e8 100%); color: white;">
-      <h1 style="color: white; margin-bottom: 0.25rem;">IT Helpdesk Dashboard</h1>
+      <h1 style="color: white; margin-bottom: 0.25rem;"><%= __('dashboard.title') %></h1>
       <p style="opacity: 0.9; margin: 0;">
-        Signed in as <strong><%= user.username %></strong> (<span style="text-transform: uppercase; font-weight: 700; font-size: 0.8rem; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px;"><%= user.role %></span>).
+        <%= __('dashboard.signedInAs') %> <strong><%= user.username %></strong> (<span style="text-transform: uppercase; font-weight: 700; font-size: 0.8rem; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px;"><%= user.role %></span>).
       </p>
     </div>
 
     <div class="grid grid-4">
       <div class="card card-hover">
         <div class="card-header">
-          <h3 class="card-title flex-align-center gap-sm"><i data-lucide="ticket"></i> Tickets</h3>
+          <h3 class="card-title flex-align-center gap-sm"><i data-lucide="ticket"></i> <%= __('dashboard.ticketsCardTitle') %></h3>
         </div>
         <div class="card-body">
-          <p class="text-muted">Manage support requests, status updates, and comments.</p>
+          <p class="text-muted"><%= __('dashboard.ticketsCardDesc') %></p>
         </div>
         <div class="card-footer">
-          <a href="/tickets" class="btn btn-primary btn-block">View tickets</a>
+          <a href="/tickets" class="btn btn-primary btn-block"><%= __('dashboard.viewTickets') %></a>
         </div>
       </div>
 
       <div class="card card-hover">
         <div class="card-header">
-          <h3 class="card-title flex-align-center gap-sm"><i data-lucide="laptop"></i> Assets</h3>
+          <h3 class="card-title flex-align-center gap-sm"><i data-lucide="laptop"></i> <%= __('dashboard.assetsCardTitle') %></h3>
         </div>
         <div class="card-body">
-          <p class="text-muted">Hardware & software inventory tracking system.</p>
+          <p class="text-muted"><%= __('dashboard.assetsCardDesc') %></p>
         </div>
         <div class="card-footer">
-          <a href="/assets" class="btn btn-primary btn-block">View assets</a>
+          <a href="/assets" class="btn btn-primary btn-block"><%= __('dashboard.viewAssets') %></a>
         </div>
       </div>
 
       <div class="card card-hover">
         <div class="card-header">
-          <h3 class="card-title flex-align-center gap-sm"><i data-lucide="activity"></i> Diagnostics</h3>
+          <h3 class="card-title flex-align-center gap-sm"><i data-lucide="activity"></i> <%= __('dashboard.diagnosticsCardTitle') %></h3>
         </div>
         <div class="card-body">
-          <p class="text-muted">Network connectivity ping and service health checks.</p>
+          <p class="text-muted"><%= __('dashboard.diagnosticsCardDesc') %></p>
         </div>
         <div class="card-footer">
-          <a href="/diagnostics" class="btn btn-primary btn-block">Network diagnostics</a>
+          <a href="/diagnostics" class="btn btn-primary btn-block"><%= __('dashboard.viewDiagnostics') %></a>
         </div>
       </div>
 
       <div class="card card-hover">
         <div class="card-header">
-          <h3 class="card-title flex-align-center gap-sm"><i data-lucide="settings"></i> Administration</h3>
+          <h3 class="card-title flex-align-center gap-sm"><i data-lucide="settings"></i> <%= __('dashboard.adminCardTitle') %></h3>
         </div>
         <div class="card-body">
-          <p class="text-muted">User accounts management and system roles.</p>
+          <p class="text-muted"><%= __('dashboard.adminCardDesc') %></p>
         </div>
         <div class="card-footer">
-          <a href="/admin" class="btn btn-primary btn-block">Administration</a>
+          <a href="/admin" class="btn btn-primary btn-block"><%= __('dashboard.administration') %></a>
         </div>
       </div>
     </div>
