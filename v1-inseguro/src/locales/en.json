@@ -11,25 +11,17 @@
     "admin": "Admin",
     "logout": "Log out"
   },
-  "topbar": {
-    "login": "Log in",
-    "register": "Register"
-  },
   "auth": {
     "loginTitle": "IT Helpdesk Login",
     "loginSubtitle": "Sign in to access support portal",
     "username": "Username",
     "password": "Password",
     "loginButton": "Log in",
-    "needAccount": "Need an account?",
-    "createAccount": "Create an account",
     "invalidCredentials": "Invalid credentials",
     "registerTitle": "Register for IT Helpdesk",
     "registerSubtitle": "Create a new user account",
     "email": "Email",
-    "registerButton": "Create account",
-    "alreadyHaveAccount": "Already have an account?",
-    "backToLogin": "Back to login"
+    "registerButton": "Create account"
   },
   "dashboard": {
     "title": "IT Helpdesk Dashboard",

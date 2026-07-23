@@ -11,25 +11,17 @@
     "admin": "Administración",
     "logout": "Cerrar sesión"
   },
-  "topbar": {
-    "login": "Iniciar sesión",
-    "register": "Registrarse"
-  },
   "auth": {
     "loginTitle": "Inicio de sesión de IT Helpdesk",
     "loginSubtitle": "Ingresá para acceder al portal de soporte",
     "username": "Usuario",
     "password": "Contraseña",
     "loginButton": "Iniciar sesión",
-    "needAccount": "¿Necesitás una cuenta?",
-    "createAccount": "Crear una cuenta",
     "invalidCredentials": "Credenciales inválidas",
     "registerTitle": "Registro en IT Helpdesk",
     "registerSubtitle": "Creá una cuenta de usuario nueva",
     "email": "Correo electrónico",
-    "registerButton": "Crear cuenta",
-    "alreadyHaveAccount": "¿Ya tenés una cuenta?",
-    "backToLogin": "Volver al inicio de sesión"
+    "registerButton": "Crear cuenta"
   },
   "dashboard": {
     "title": "Panel de IT Helpdesk",

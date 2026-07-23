@@ -276,30 +276,6 @@ code, pre {
   border-color: var(--color-primary-hover);
 }
 
-.card-close-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  color: var(--color-text-muted);
-  background-color: var(--color-bg-app);
-  border: 1px solid var(--color-border);
-  transition: var(--transition-fast);
-  text-decoration: none !important;
-  z-index: 10;
-}
-
-.card-close-btn:hover {
-  color: var(--color-danger);
-  background-color: var(--color-danger-light);
-  border-color: #fca5a5;
-}
-
 .card-header {
   padding-bottom: 1rem;
   margin-bottom: 1rem;
