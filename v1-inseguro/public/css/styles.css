@@ -397,6 +397,18 @@ code, pre {
   border-color: var(--color-secondary);
 }
 
+.btn-ghost {
+  background-color: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.btn-ghost:hover {
+  color: var(--color-text-main);
+  border-color: var(--color-border-hover);
+  background-color: var(--color-surface-hover);
+}
+
 .btn-sm {
   font-size: 0.8rem;
   padding: 0.35rem 0.75rem;

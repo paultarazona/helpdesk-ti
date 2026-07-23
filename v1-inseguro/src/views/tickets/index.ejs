@@ -14,13 +14,25 @@
         </div>
         <div class="form-group">
           <label class="form-label"><%= __('tickets.statusLabel') %></label>
-          <input class="form-control" name="status" value="<%= status %>" placeholder="<%= __('tickets.statusPlaceholder') %>">
+          <select class="form-control" name="status">
+            <option value="" <%= status === '' ? 'selected' : '' %>><%= __('tickets.statusOptions.all') %></option>
+            <option value="open" <%= status === 'open' ? 'selected' : '' %>><%= __('tickets.statusOptions.open') %></option>
+            <option value="in_progress" <%= status === 'in_progress' ? 'selected' : '' %>><%= __('tickets.statusOptions.in_progress') %></option>
+            <option value="closed" <%= status === 'closed' ? 'selected' : '' %>><%= __('tickets.statusOptions.closed') %></option>
+          </select>
         </div>
         <div class="form-group">
           <label class="form-label"><%= __('tickets.priorityLabel') %></label>
-          <input class="form-control" name="priority" value="<%= priority %>" placeholder="<%= __('tickets.priorityPlaceholder') %>">
+          <select class="form-control" name="priority">
+            <option value="" <%= priority === '' ? 'selected' : '' %>><%= __('tickets.priorityOptions.all') %></option>
+            <option value="low" <%= priority === 'low' ? 'selected' : '' %>><%= __('tickets.priorityOptions.low') %></option>
+            <option value="medium" <%= priority === 'medium' ? 'selected' : '' %>><%= __('tickets.priorityOptions.medium') %></option>
+            <option value="high" <%= priority === 'high' ? 'selected' : '' %>><%= __('tickets.priorityOptions.high') %></option>
+            <option value="critical" <%= priority === 'critical' ? 'selected' : '' %>><%= __('tickets.priorityOptions.critical') %></option>
+          </select>
         </div>
         <button type="submit" class="btn btn-secondary"><%= __('tickets.filter') %></button>
+        <a href="/tickets" class="btn btn-ghost"><%= __('tickets.clearFilters') %></a>
       </form>
     </div>
 
@@ -54,10 +66,10 @@
                 <a href="/tickets/<%= ticket.id %>" style="font-weight: 600;"><%= ticket.subject %></a>
               </td>
               <td>
-                <span class="badge badge-<%= ticket.status %>"><%= ticket.status %></span>
+                <span class="badge badge-<%= ticket.status %>"><%= __('tickets.statusOptions.' + ticket.status) %></span>
               </td>
               <td>
-                <span class="badge badge-<%= ticket.priority %>"><%= ticket.priority %></span>
+                <span class="badge badge-<%= ticket.priority %>"><%= __('tickets.priorityOptions.' + ticket.priority) %></span>
               </td>
               <td><%= ticket.requester_username %></td>
               <td>

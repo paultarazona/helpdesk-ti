@@ -46,10 +46,22 @@
     "searchLabel": "Search",
     "searchPlaceholder": "Subject or keyword...",
     "statusLabel": "Status",
-    "statusPlaceholder": "open, closed...",
+    "statusOptions": {
+      "all": "All",
+      "open": "Open",
+      "in_progress": "In progress",
+      "closed": "Closed"
+    },
     "priorityLabel": "Priority",
-    "priorityPlaceholder": "low, high...",
+    "priorityOptions": {
+      "all": "All",
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "critical": "Critical"
+    },
     "filter": "Filter",
+    "clearFilters": "Clear filters",
     "searchResultsFor": "Search results for:",
     "noTickets": "No tickets found.",
     "colSubject": "Subject",

@@ -19,8 +19,8 @@
           </p>
         </div>
         <div class="flex gap-sm">
-          <span class="badge badge-<%= ticket.status %>"><%= ticket.status %></span>
-          <span class="badge badge-<%= ticket.priority %>"><%= ticket.priority %></span>
+          <span class="badge badge-<%= ticket.status %>"><%= __('tickets.statusOptions.' + ticket.status) %></span>
+          <span class="badge badge-<%= ticket.priority %>"><%= __('tickets.priorityOptions.' + ticket.priority) %></span>
         </div>
       </div>
       <div class="card-body">

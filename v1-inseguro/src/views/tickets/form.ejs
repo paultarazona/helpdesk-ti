@@ -20,11 +20,20 @@
           <div class="grid grid-2 mb-3">
             <div class="form-group">
               <label class="form-label"><%= __('tickets.form.status') %></label>
-              <input class="form-control" name="status" value="<%= ticket.status || 'open' %>">
+              <select class="form-control" name="status">
+                <option value="open" <%= (ticket.status || 'open') === 'open' ? 'selected' : '' %>><%= __('tickets.statusOptions.open') %></option>
+                <option value="in_progress" <%= ticket.status === 'in_progress' ? 'selected' : '' %>><%= __('tickets.statusOptions.in_progress') %></option>
+                <option value="closed" <%= ticket.status === 'closed' ? 'selected' : '' %>><%= __('tickets.statusOptions.closed') %></option>
+              </select>
             </div>
             <div class="form-group">
               <label class="form-label"><%= __('tickets.form.priority') %></label>
-              <input class="form-control" name="priority" value="<%= ticket.priority || 'medium' %>">
+              <select class="form-control" name="priority">
+                <option value="low" <%= (ticket.priority || 'medium') === 'low' ? 'selected' : '' %>><%= __('tickets.priorityOptions.low') %></option>
+                <option value="medium" <%= (ticket.priority || 'medium') === 'medium' ? 'selected' : '' %>><%= __('tickets.priorityOptions.medium') %></option>
+                <option value="high" <%= ticket.priority === 'high' ? 'selected' : '' %>><%= __('tickets.priorityOptions.high') %></option>
+                <option value="critical" <%= ticket.priority === 'critical' ? 'selected' : '' %>><%= __('tickets.priorityOptions.critical') %></option>
+              </select>
             </div>
           </div>
           <div class="form-group">

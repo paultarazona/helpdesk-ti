@@ -46,10 +46,22 @@
     "searchLabel": "Buscar",
     "searchPlaceholder": "Asunto o palabra clave...",
     "statusLabel": "Estado",
-    "statusPlaceholder": "abierto, cerrado...",
+    "statusOptions": {
+      "all": "Todos",
+      "open": "Abierto",
+      "in_progress": "En progreso",
+      "closed": "Cerrado"
+    },
     "priorityLabel": "Prioridad",
-    "priorityPlaceholder": "baja, alta...",
+    "priorityOptions": {
+      "all": "Todas",
+      "low": "Baja",
+      "medium": "Media",
+      "high": "Alta",
+      "critical": "Crítica"
+    },
     "filter": "Filtrar",
+    "clearFilters": "Limpiar filtros",
     "searchResultsFor": "Resultados de búsqueda para:",
     "noTickets": "No se encontraron tickets.",
     "colSubject": "Asunto",
