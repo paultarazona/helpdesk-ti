@@ -5,6 +5,7 @@ const express = require('express');
 const request = require('supertest');
 
 const { createDiagnosticsRouter } = require('../src/modules/diagnostics/routes');
+const { useI18n } = require('./helpers/i18n');
 
 function createDiagnosticsApp(execute, requestUrl) {
   const app = express();
@@ -15,6 +16,7 @@ function createDiagnosticsApp(execute, requestUrl) {
   });
   app.set('view engine', 'ejs');
   app.set('views', path.join(__dirname, '..', 'src', 'views'));
+  useI18n(app);
   app.use('/diagnostics', createDiagnosticsRouter(execute, requestUrl));
   app.use((error, _request, response, _next) => response.status(500).send(error.message));
   return app;

@@ -6,12 +6,14 @@ const request = require('supertest');
 
 const { createCommentsRouter } = require('../src/modules/comments/routes');
 const { createTicketsRouter } = require('../src/modules/tickets/routes');
+const { useI18n } = require('./helpers/i18n');
 
 function createCommentsApp(database) {
   const app = express();
   app.set('view engine', 'ejs');
   app.set('views', path.join(__dirname, '..', 'src', 'views'));
   app.use(express.urlencoded({ extended: false }));
+  useI18n(app);
   app.use((request, _response, next) => {
     request.user = { id: 1, username: 'alice', role: 'user' };
     next();

@@ -7,13 +7,16 @@ const request = require('supertest');
 
 const config = require('../src/config');
 const { createAuthRouter } = require('../src/modules/auth/routes');
-const { requireAuth } = require('../src/core/middleware/auth');
+const { attachUser, requireAuth } = require('../src/core/middleware/auth');
+const { useI18n } = require('./helpers/i18n');
 
 function createTestApp(database) {
   const app = express();
   app.set('view engine', 'ejs');
   app.set('views', path.join(__dirname, '..', 'src', 'views'));
   app.use(express.urlencoded({ extended: false }));
+  useI18n(app);
+  app.use(attachUser);
   app.use(createAuthRouter(database));
   app.get('/protected', requireAuth, (request, response) => {
     response.json({ user: request.user });

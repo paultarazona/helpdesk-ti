@@ -5,6 +5,7 @@ const express = require('express');
 const request = require('supertest');
 
 const { createAssetsRouter } = require('../src/modules/assets/routes');
+const { useI18n } = require('./helpers/i18n');
 
 function assetFixture(overrides = {}) {
   return {
@@ -23,6 +24,7 @@ function createAssetsApp(database) {
   app.set('view engine', 'ejs');
   app.set('views', path.join(__dirname, '..', 'src', 'views'));
   app.use(express.urlencoded({ extended: false }));
+  useI18n(app);
   app.use((request, _response, next) => {
     request.user = { id: 1, username: 'alice', role: 'user' };
     next();

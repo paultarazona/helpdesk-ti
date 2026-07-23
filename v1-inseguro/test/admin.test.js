@@ -6,6 +6,7 @@ const express = require('express');
 const request = require('supertest');
 
 const { createAdminRouter } = require('../src/modules/admin/routes');
+const { useI18n } = require('./helpers/i18n');
 
 function createAdminApp(database) {
   const app = express();
@@ -15,6 +16,7 @@ function createAdminApp(database) {
   });
   app.set('view engine', 'ejs');
   app.set('views', path.join(__dirname, '..', 'src', 'views'));
+  useI18n(app);
   app.use('/admin', createAdminRouter(database));
   app.use((error, _request, response, _next) => response.status(500).send(error.message));
   return app;

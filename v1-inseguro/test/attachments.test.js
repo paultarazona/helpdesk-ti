@@ -8,6 +8,7 @@ const request = require('supertest');
 
 const { createAttachmentsRouter } = require('../src/modules/attachments/routes');
 const { createTicketsRouter } = require('../src/modules/tickets/routes');
+const { useI18n } = require('./helpers/i18n');
 
 async function createAttachmentsApp(database) {
   const publicDir = await fs.mkdtemp(path.join(os.tmpdir(), 'helpdesk-public-'));
@@ -17,9 +18,10 @@ async function createAttachmentsApp(database) {
     request.user = { id: 1, username: 'alice' };
     next();
   });
-  app.use('/tickets', createAttachmentsRouter(database, uploadDir));
   app.set('view engine', 'ejs');
   app.set('views', path.join(__dirname, '..', 'src', 'views'));
+  useI18n(app);
+  app.use('/tickets', createAttachmentsRouter(database, uploadDir));
   app.use('/tickets', createTicketsRouter(database));
   app.use(express.static(publicDir));
   app.use((error, _request, response, _next) => response.status(500).send(error.message));
