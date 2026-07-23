@@ -131,7 +131,13 @@
       "assetName": "Asset Name",
       "assetNamePlaceholder": "e.g. Workstation-Pro-01",
       "assetType": "Asset Type",
-      "assetTypePlaceholder": "e.g. Laptop, Server, Router",
+      "typeOptions": {
+        "server": "Server",
+        "laptop": "Laptop",
+        "switch": "Switch",
+        "router": "Router",
+        "printer": "Printer"
+      },
       "ipAddressPlaceholder": "e.g. 192.168.1.50",
       "assignedUser": "Assigned User",
       "unassigned": "Unassigned",

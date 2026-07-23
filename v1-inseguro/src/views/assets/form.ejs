@@ -14,7 +14,14 @@
           </div>
           <div class="form-group">
             <label class="form-label"><%= __('assets.form.assetType') %></label>
-            <input class="form-control" name="assetType" value="<%= asset.asset_type || '' %>" required placeholder="<%= __('assets.form.assetTypePlaceholder') %>">
+            <select class="form-control" name="assetType" required>
+              <option value="" disabled <%= !asset.asset_type ? 'selected' : '' %>><%= __('assets.form.assetType') %></option>
+              <option value="server" <%= asset.asset_type === 'server' ? 'selected' : '' %>><%= __('assets.form.typeOptions.server') %></option>
+              <option value="laptop" <%= asset.asset_type === 'laptop' ? 'selected' : '' %>><%= __('assets.form.typeOptions.laptop') %></option>
+              <option value="switch" <%= asset.asset_type === 'switch' ? 'selected' : '' %>><%= __('assets.form.typeOptions.switch') %></option>
+              <option value="router" <%= asset.asset_type === 'router' ? 'selected' : '' %>><%= __('assets.form.typeOptions.router') %></option>
+              <option value="printer" <%= asset.asset_type === 'printer' ? 'selected' : '' %>><%= __('assets.form.typeOptions.printer') %></option>
+            </select>
           </div>
           <div class="form-group">
             <label class="form-label"><%= __('assets.ipAddress') %></label>

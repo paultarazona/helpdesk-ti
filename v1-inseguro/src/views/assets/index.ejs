@@ -10,7 +10,7 @@
       <form method="get" action="/assets" class="form-inline">
         <div class="form-group" style="flex: 1;">
           <label class="form-label"><%= __('assets.searchByNameOrIp') %></label>
-          <input class="form-control" name="search" value="<%= search %>" placeholder="<%= __('assets.searchPlaceholder') %>">
+          <input class="form-control" id="assetSearchInput" name="search" value="<%= search %>" placeholder="<%= __('assets.searchPlaceholder') %>">
         </div>
         <button type="submit" class="btn btn-secondary"><%= __('assets.search') %></button>
       </form>
@@ -39,7 +39,7 @@
                 <a href="/assets/<%= asset.id %>" style="font-weight: 600;"><%= asset.name %></a>
               </td>
               <td>
-                <span class="badge badge-low"><%= asset.asset_type %></span>
+                <span class="badge badge-low"><%= __('assets.form.typeOptions.' + asset.asset_type) %></span>
               </td>
               <td>
                 <code><%= asset.ip_address || __('assets.noIp') %></code>
@@ -55,5 +55,19 @@
     </div>
   </div>
 </main>
+
+<script>
+  (function () {
+    var input = document.getElementById('assetSearchInput');
+    if (!input) return;
+    var hadValue = input.value.length > 0;
+    input.addEventListener('input', function () {
+      if (hadValue && input.value === '') {
+        input.form.submit();
+      }
+      hadValue = input.value.length > 0;
+    });
+  })();
+</script>
 
 <%- include('../partials/footer') %>

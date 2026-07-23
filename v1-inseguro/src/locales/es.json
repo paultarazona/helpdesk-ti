@@ -131,7 +131,13 @@
       "assetName": "Nombre del activo",
       "assetNamePlaceholder": "ej. Workstation-Pro-01",
       "assetType": "Tipo de activo",
-      "assetTypePlaceholder": "ej. Laptop, Servidor, Router",
+      "typeOptions": {
+        "server": "Servidor",
+        "laptop": "Laptop",
+        "switch": "Switch",
+        "router": "Router",
+        "printer": "Impresora"
+      },
       "ipAddressPlaceholder": "ej. 192.168.1.50",
       "assignedUser": "Usuario asignado",
       "unassigned": "Sin asignar",

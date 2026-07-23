@@ -10,7 +10,7 @@ CREATE TABLE users (
 CREATE TABLE assets (
   id SERIAL PRIMARY KEY,
   name VARCHAR(120) NOT NULL,
-  asset_type VARCHAR(40) NOT NULL,
+  asset_type VARCHAR(40) NOT NULL CHECK (asset_type IN ('server', 'laptop', 'switch', 'router', 'printer')),
   ip_address VARCHAR(45),
   assigned_to_user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
   created_by_user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
