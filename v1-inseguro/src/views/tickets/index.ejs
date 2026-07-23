@@ -2,15 +2,8 @@
 
 <main class="main-content">
   <div class="container">
-    <div class="flex-between mb-4">
-      <div>
-        <h1><%= __('tickets.pageTitle') %></h1>
-        <p class="text-muted"><%= __('tickets.pageSubtitle') %></p>
-      </div>
-      <div class="flex gap-md">
-        <a href="/dashboard" class="btn btn-outline"><%= __('sidebar.dashboard') %></a>
-        <a href="/tickets/new" class="btn btn-primary"><%= __('tickets.createTicket') %></a>
-      </div>
+    <div class="flex gap-md mb-4" style="justify-content: flex-end;">
+      <a href="/tickets/new" class="btn btn-primary"><%= __('tickets.createTicket') %></a>
     </div>
 
     <div class="card mb-4">
