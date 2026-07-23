@@ -4,18 +4,6 @@ This is a deliberately vulnerable IT helpdesk application for cybersecurity prac
 
 Do not publish this application, expose it to the internet, or connect it to a production database.
 
-## Quick Start
-
-Run these commands from the `v1-inseguro` directory after completing the PostgreSQL setup below:
-
-```powershell
-npm install
-npm run db:setup
-npm start
-```
-
-Open `http://localhost:3017` in your browser.
-
 ## Requirements
 
 - Node.js 22 or newer
@@ -33,9 +21,17 @@ CREATE DATABASE helpdesk_v1_lab;
 
 Do not reuse a database from another project. The setup command adds tables and sample users to the database selected in `DATABASE_URL`.
 
-## 2. Configure the Connection
+## 2. Install Dependencies
 
-From `v1-inseguro`, copy the template:
+From `v1-inseguro`:
+
+```powershell
+npm install
+```
+
+## 3. Configure the Connection
+
+Copy the template:
 
 ```powershell
 Copy-Item .env.example .env
@@ -45,18 +41,12 @@ Open `.env` and replace the connection values with your own PostgreSQL server de
 
 ```dotenv
 NODE_ENV=development
-PORT=3017
+PORT=3000
 DATABASE_URL=postgresql://USER:PASSWORD@HOST:5432/helpdesk_v1_lab
 JWT_SECRET=replace-with-a-local-lab-secret
 ```
 
 Keep `.env` private. It is excluded from Git and must never contain a shared or production database URL. If the password contains URL-reserved characters such as `@`, `:`, `/`, or `#`, encode it in the connection URL.
-
-## 3. Install Dependencies
-
-```powershell
-npm install
-```
 
 ## 4. Initialize the Database
 
@@ -74,7 +64,7 @@ v1 does not use versioned migrations. Its database initialization is intentional
 npm start
 ```
 
-Visit `http://localhost:3017`. Stop the server with `Ctrl+C`.
+Visit `http://localhost:3000` (or the port you set in `.env`). Stop the server with `Ctrl+C`.
 
 ## Sample Accounts
 
