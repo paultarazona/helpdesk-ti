@@ -1,0 +1,28 @@
+<%
+  var crumbPath = typeof currentPath !== 'undefined' && currentPath ? currentPath : '';
+  var breadcrumbSections = [
+    { prefix: '/tickets', key: 'sidebar.tickets' },
+    { prefix: '/assets', key: 'sidebar.assets' },
+    { prefix: '/diagnostics', key: 'sidebar.diagnostics' },
+    { prefix: '/admin', key: 'sidebar.admin' }
+  ];
+  var activeSection = null;
+  for (var i = 0; i < breadcrumbSections.length; i++) {
+    if (crumbPath.indexOf(breadcrumbSections[i].prefix) === 0) {
+      activeSection = breadcrumbSections[i];
+      break;
+    }
+  }
+%>
+<header class="app-topbar">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <% if (activeSection) { %>
+      <a href="/dashboard" class="breadcrumb-link"><%= __('sidebar.dashboard') %></a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current"><%= __(activeSection.key) %></span>
+    <% } else { %>
+      <span class="breadcrumb-current"><%= __('sidebar.dashboard') %></span>
+    <% } %>
+  </nav>
+  <%- include('lang-switcher') %>
+</header>
