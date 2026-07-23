@@ -169,7 +169,7 @@ code, pre {
 
 .main-content {
   flex: 1 0 auto;
-  padding: 2rem 0;
+  padding: 1.25rem 0 2rem;
 }
 
 .container {
@@ -581,6 +581,11 @@ textarea.form-control {
 .badge-closed {
   background-color: var(--badge-closed-bg);
   color: var(--badge-closed-text);
+}
+
+.badge-critical {
+  background-color: var(--color-danger);
+  color: var(--color-text-white);
 }
 
 .badge-urgent {
