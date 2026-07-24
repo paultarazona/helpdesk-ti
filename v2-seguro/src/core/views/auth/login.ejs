@@ -1,0 +1,34 @@
+<%- include('../partials/header', { title: 'Iniciar sesión' }) %>
+
+<div class="container container-narrow">
+  <div class="card">
+    <div class="card-header text-center">
+      <h1 class="card-title">Iniciar sesión</h1>
+      <p class="text-muted">Ingresá con tu usuario y contraseña.</p>
+    </div>
+    <div class="card-body">
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-error">
+          <span><%= error %></span>
+        </div>
+      <% } %>
+      <form method="post" action="/login">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <div class="form-group">
+          <label class="form-label" for="username">Usuario</label>
+          <input class="form-control" id="username" name="username" required autofocus />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password">Contraseña</label>
+          <input class="form-control" id="password" name="password" type="password" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg">Ingresar</button>
+      </form>
+    </div>
+    <div class="card-footer">
+      <a href="/register" class="btn btn-outline btn-block">Crear una cuenta</a>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

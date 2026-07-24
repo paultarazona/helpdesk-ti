@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= typeof title !== 'undefined' ? title + ' | Helpdesk TI' : 'Helpdesk TI' %></title>
+    <!-- Vanilla CSS design system, ported from v1-inseguro/public/css/styles.css. -->
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <% if (typeof user !== 'undefined' && user) { %>
+      <header class="top-bar">
+        <div class="container top-bar-inner">
+          <a href="/dashboard" class="brand">Helpdesk TI</a>
+          <div class="top-bar-actions">
+            <a href="/tickets" class="btn btn-ghost btn-sm">Tickets</a>
+            <a href="/assets" class="btn btn-ghost btn-sm">Activos</a>
+            <span class="user-pill">
+              <span><%= user.username %></span>
+              <span class="user-role-tag"><%= user.role %></span>
+            </span>
+            <form method="post" action="/logout" style="margin: 0;">
+              <button type="submit" class="btn btn-outline btn-sm">Salir</button>
+            </form>
+          </div>
+        </div>
+      </header>
+    <% } else { %>
+      <header class="top-bar">
+        <div class="container top-bar-inner">
+          <a href="/login" class="brand">Helpdesk TI</a>
+        </div>
+      </header>
+    <% } %>
+    <main class="main-content">
