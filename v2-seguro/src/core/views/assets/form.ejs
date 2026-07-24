@@ -1,0 +1,48 @@
+<%- include('../partials/header', { title: heading }) %>
+
+<div class="container container-narrow">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="card-title"><%= heading %></h1>
+    </div>
+    <div class="card-body">
+      <form method="post" action="<%= action %>">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <div class="form-group">
+          <label class="form-label">Nombre</label>
+          <input class="form-control" name="name" value="<%= asset.name || '' %>" required autofocus>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo de equipo</label>
+          <select class="form-control" name="assetType" required>
+            <option value="" disabled <%= !asset.asset_type ? 'selected' : '' %>>Seleccionar tipo</option>
+            <option value="server" <%= asset.asset_type === 'server' ? 'selected' : '' %>>Servidor</option>
+            <option value="laptop" <%= asset.asset_type === 'laptop' ? 'selected' : '' %>>Laptop</option>
+            <option value="switch" <%= asset.asset_type === 'switch' ? 'selected' : '' %>>Switch</option>
+            <option value="router" <%= asset.asset_type === 'router' ? 'selected' : '' %>>Router</option>
+            <option value="printer" <%= asset.asset_type === 'printer' ? 'selected' : '' %>>Impresora</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Dirección IP</label>
+          <input class="form-control" name="ipAddress" value="<%= asset.ip_address || '' %>" placeholder="Ej. 192.168.1.10">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Asignado a</label>
+          <select class="form-select" name="assignedToUserId">
+            <option value="">Sin asignar</option>
+            <% users.forEach((user) => { %>
+              <option value="<%= user.id %>" <%= String(asset.assigned_to_user_id) === String(user.id) ? 'selected' : '' %>><%= user.username %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <a href="/assets" class="btn btn-outline">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

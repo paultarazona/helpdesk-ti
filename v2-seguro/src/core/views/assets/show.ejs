@@ -1,0 +1,69 @@
+<%- include('../partials/header', { title: asset.name }) %>
+
+<div class="container">
+  <div class="mb-3">
+    <a href="/assets" class="btn btn-sm btn-outline">&larr; Volver a activos</a>
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-header flex-between">
+        <div>
+          <h1 class="card-title"><%= asset.name %></h1>
+          <span class="badge badge-low mt-1"><%= asset.asset_type %></span>
+        </div>
+        <div class="flex gap-sm">
+          <% if (asset.ip_address) { %>
+            <a href="/diagnostics?target=<%= encodeURIComponent(asset.ip_address) %>" class="btn btn-outline">Diagnóstico (ping)</a>
+          <% } %>
+          <a href="/assets/<%= asset.id %>/edit" class="btn btn-secondary">Editar</a>
+          <form method="post" action="/assets/<%= asset.id %>/delete" style="display: inline-block; margin: 0;">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+          </form>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="grid grid-2 gap-md">
+          <div>
+            <p class="text-muted mb-1" style="font-size: 0.85rem;">Dirección IP</p>
+            <p><code><%= asset.ip_address || 'No configurada' %></code></p>
+          </div>
+          <div>
+            <p class="text-muted mb-1" style="font-size: 0.85rem;">Asignado a</p>
+            <p><strong><%= asset.assigned_username || 'Sin asignar' %></strong></p>
+          </div>
+          <div>
+            <p class="text-muted mb-1" style="font-size: 0.85rem;">Creado por</p>
+            <p><%= asset.created_by_username || 'Desconocido' %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Tickets relacionados</h2>
+      </div>
+      <div class="card-body">
+        <% if (tickets.length === 0) { %>
+          <p class="text-muted">No hay tickets vinculados a este activo.</p>
+        <% } else { %>
+          <ul style="list-style: none; padding: 0;">
+            <% tickets.forEach((ticket) => { %>
+              <li style="padding: 0.65rem 0; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center;">
+                <a href="/tickets/<%= ticket.id %>" style="font-weight: 600;"><%= ticket.subject %></a>
+                <div class="flex gap-sm">
+                  <span class="badge badge-<%= ticket.status %>"><%= ticket.status %></span>
+                  <span class="badge badge-<%= ticket.priority %>"><%= ticket.priority %></span>
+                </div>
+              </li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

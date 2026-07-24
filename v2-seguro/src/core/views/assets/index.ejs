@@ -1,0 +1,58 @@
+<%- include('../partials/header', { title: 'Activos' }) %>
+
+<div class="container">
+  <div class="flex gap-md mb-4" style="justify-content: flex-end;">
+    <a href="/assets/new" class="btn btn-primary">Nuevo activo</a>
+  </div>
+
+  <div class="card mb-4">
+    <form method="get" action="/assets" class="form-inline">
+      <div class="form-group" style="flex: 1;">
+        <label class="form-label">Buscar por nombre o IP</label>
+        <input class="form-control" name="search" value="<%= search %>" placeholder="Buscar por nombre o IP">
+      </div>
+      <button type="submit" class="btn btn-secondary">Buscar</button>
+      <a href="/assets" class="btn btn-ghost">Limpiar filtros</a>
+    </form>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Tipo</th>
+          <th>IP</th>
+          <th>Asignado a</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (assets.length === 0) { %>
+          <tr>
+            <td colspan="5" class="text-center text-muted" style="padding: 2rem;">No se encontraron activos.</td>
+          </tr>
+        <% } %>
+        <% assets.forEach((asset) => { %>
+          <tr>
+            <td>
+              <a href="/assets/<%= asset.id %>" style="font-weight: 600;"><%= asset.name %></a>
+            </td>
+            <td>
+              <span class="badge badge-low"><%= asset.asset_type %></span>
+            </td>
+            <td>
+              <code><%= asset.ip_address || '—' %></code>
+            </td>
+            <td><%= asset.assigned_username || 'Sin asignar' %></td>
+            <td>
+              <a href="/assets/<%= asset.id %>" class="btn btn-sm btn-outline">Ver</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
