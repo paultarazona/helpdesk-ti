@@ -1,0 +1,55 @@
+<%- include('../partials/header', { title: 'Diagnóstico de red' }) %>
+
+<main class="main-content">
+  <div class="container">
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Ping a un activo</h2>
+        </div>
+        <div class="card-body">
+          <form method="post" action="/diagnostics/ping">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <div class="form-group">
+              <label class="form-label">Dirección IP (IPv4)</label>
+              <input class="form-control" name="target" required placeholder="192.168.1.10" value="<%= prefillTarget || '' %>" />
+            </div>
+            <button type="submit" class="btn btn-primary">Ejecutar ping</button>
+          </form>
+
+          <% if (pingOutput) { %>
+            <div class="mt-4">
+              <p class="form-label">Resultado</p>
+              <pre class="terminal-output"><%= pingOutput %></pre>
+            </div>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Health-check de servicio</h2>
+        </div>
+        <div class="card-body">
+          <form method="post" action="/diagnostics/health-check">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <div class="form-group">
+              <label class="form-label">URL del servicio</label>
+              <input type="url" class="form-control" name="url" required placeholder="https://ejemplo.com/health" />
+            </div>
+            <button type="submit" class="btn btn-primary">Verificar servicio</button>
+          </form>
+
+          <% if (healthOutput) { %>
+            <div class="mt-4">
+              <p class="form-label">Resultado</p>
+              <pre class="terminal-output"><%= healthOutput %></pre>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>
