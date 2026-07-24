@@ -6,6 +6,7 @@ node_modules/
 .env.*
 !*.example
 uploads/
+v2-seguro/storage/
 
 # Local tooling metadata
 .atl/

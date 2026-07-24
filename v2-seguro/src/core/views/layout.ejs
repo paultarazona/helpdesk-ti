@@ -1,0 +1,12 @@
+<!--
+  Not used as a Rails-style "yield" layout — this project has no
+  express-ejs-layouts dependency, so EJS has no built-in mechanism for a
+  view to inject itself into a shared wrapper. Kept here only as a copy of
+  the header/footer markup for reference; actual views under `auth/`
+  include `partials/header` and `partials/footer` directly, the same
+  pattern v1 uses (see v1-inseguro/src/views/partials/header.ejs).
+
+  CSP note: helmet restricts scriptSrc to 'self' (see
+  src/config/helmet.js) — do not add the Lucide CDN <script> tag v1 uses in
+  its footer, it will be blocked. Icons are skipped for the auth module.
+-->
