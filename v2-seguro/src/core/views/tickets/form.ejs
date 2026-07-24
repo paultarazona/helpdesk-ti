@@ -1,0 +1,56 @@
+<%- include('../partials/header', { title: heading }) %>
+
+<div class="container container-narrow">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="card-title"><%= heading %></h1>
+    </div>
+    <div class="card-body">
+      <form method="post" action="<%= action %>">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <div class="form-group">
+          <label class="form-label">Asunto</label>
+          <input class="form-control" name="subject" value="<%= ticket.subject || '' %>" required autofocus>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Descripción</label>
+          <textarea class="form-control" name="description" rows="5" required><%= ticket.description || '' %></textarea>
+        </div>
+        <div class="grid grid-2 mb-3">
+          <div class="form-group">
+            <label class="form-label">Estado</label>
+            <select class="form-control" name="status">
+              <option value="open" <%= (ticket.status || 'open') === 'open' ? 'selected' : '' %>>Abierto</option>
+              <option value="in_progress" <%= ticket.status === 'in_progress' ? 'selected' : '' %>>En progreso</option>
+              <option value="closed" <%= ticket.status === 'closed' ? 'selected' : '' %>>Cerrado</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Prioridad</label>
+            <select class="form-control" name="priority">
+              <option value="low" <%= ticket.priority === 'low' ? 'selected' : '' %>>Baja</option>
+              <option value="medium" <%= (ticket.priority || 'medium') === 'medium' ? 'selected' : '' %>>Media</option>
+              <option value="high" <%= ticket.priority === 'high' ? 'selected' : '' %>>Alta</option>
+              <option value="critical" <%= ticket.priority === 'critical' ? 'selected' : '' %>>Crítica</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Activo relacionado</label>
+          <select class="form-select" name="assetId">
+            <option value="">Sin activo</option>
+            <% assets.forEach((asset) => { %>
+              <option value="<%= asset.id %>" <%= String(ticket.asset_id) === String(asset.id) ? 'selected' : '' %>><%= asset.name %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <a href="/tickets" class="btn btn-outline">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

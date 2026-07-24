@@ -1,0 +1,77 @@
+<%- include('../partials/header', { title: 'Tickets' }) %>
+
+<div class="container">
+  <div class="flex gap-md mb-4" style="justify-content: flex-end;">
+    <a href="/tickets/new" class="btn btn-primary">Nuevo ticket</a>
+  </div>
+
+  <div class="card mb-4">
+    <form method="get" action="/tickets" class="form-inline">
+      <div class="form-group">
+        <label class="form-label">Buscar</label>
+        <input class="form-control" name="search" value="<%= search %>" placeholder="Buscar por asunto o descripción">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Estado</label>
+        <select class="form-control" name="status">
+          <option value="" <%= status === '' ? 'selected' : '' %>>Todos</option>
+          <option value="open" <%= status === 'open' ? 'selected' : '' %>>Abierto</option>
+          <option value="in_progress" <%= status === 'in_progress' ? 'selected' : '' %>>En progreso</option>
+          <option value="closed" <%= status === 'closed' ? 'selected' : '' %>>Cerrado</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Prioridad</label>
+        <select class="form-control" name="priority">
+          <option value="" <%= priority === '' ? 'selected' : '' %>>Todas</option>
+          <option value="low" <%= priority === 'low' ? 'selected' : '' %>>Baja</option>
+          <option value="medium" <%= priority === 'medium' ? 'selected' : '' %>>Media</option>
+          <option value="high" <%= priority === 'high' ? 'selected' : '' %>>Alta</option>
+          <option value="critical" <%= priority === 'critical' ? 'selected' : '' %>>Crítica</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-secondary">Filtrar</button>
+      <a href="/tickets" class="btn btn-ghost">Limpiar filtros</a>
+    </form>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Asunto</th>
+          <th>Estado</th>
+          <th>Prioridad</th>
+          <th>Solicitante</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (tickets.length === 0) { %>
+          <tr>
+            <td colspan="5" class="text-center text-muted" style="padding: 2rem;">No se encontraron tickets.</td>
+          </tr>
+        <% } %>
+        <% tickets.forEach((ticket) => { %>
+          <tr>
+            <td>
+              <a href="/tickets/<%= ticket.id %>" style="font-weight: 600;"><%= ticket.subject %></a>
+            </td>
+            <td>
+              <span class="badge badge-<%= ticket.status %>"><%= ticket.status %></span>
+            </td>
+            <td>
+              <span class="badge badge-<%= ticket.priority %>"><%= ticket.priority %></span>
+            </td>
+            <td><%= ticket.requester_username %></td>
+            <td>
+              <a href="/tickets/<%= ticket.id %>" class="btn btn-sm btn-outline">Ver</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

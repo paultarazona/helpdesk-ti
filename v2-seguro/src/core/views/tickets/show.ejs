@@ -1,0 +1,121 @@
+<%- include('../partials/header', { title: ticket.subject }) %>
+
+<div class="container">
+  <div class="mb-3">
+    <a href="/tickets" class="btn btn-sm btn-outline">&larr; Volver a tickets</a>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-header flex-between">
+      <div>
+        <h1 class="card-title"><%= ticket.subject %></h1>
+        <p class="text-muted" style="margin: 0.25rem 0 0 0;">
+          Solicitado por <strong><%= ticket.requester_username %></strong>
+          <% if (ticket.asset_name) { %>
+            | Activo: <strong><%= ticket.asset_name %></strong>
+          <% } %>
+        </p>
+      </div>
+      <div class="flex gap-sm">
+        <span class="badge badge-<%= ticket.status %>"><%= ticket.status %></span>
+        <span class="badge badge-<%= ticket.priority %>"><%= ticket.priority %></span>
+      </div>
+    </div>
+    <div class="card-body">
+      <!-- Mitigates [VULN-002][A03:XSS-Stored][CWE-79]: the description is
+           always rendered with `<%= %>` (auto-escaped), never `<%- %>`, in
+           direct contrast with v1-inseguro/src/views/tickets/detail.ejs. -->
+      <section class="mb-4 content-box"><%= ticket.description %></section>
+
+      <div class="flex flex-wrap gap-md align-items-center">
+        <a href="/tickets/<%= ticket.id %>/edit" class="btn btn-secondary">Editar</a>
+
+        <form method="post" action="/tickets/<%= ticket.id %>/close" style="display: inline-block; margin: 0;">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <button type="submit" class="btn btn-outline">Cerrar ticket</button>
+        </form>
+
+        <form method="post" action="/tickets/<%= ticket.id %>/delete" style="display: inline-block; margin: 0;">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <button type="submit" class="btn btn-danger">Eliminar ticket</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">Comentarios</h2>
+    </div>
+    <div class="card-body">
+      <% if (comments.length === 0) { %>
+        <p class="text-muted">Todavía no hay comentarios.</p>
+      <% } %>
+
+      <% comments.forEach((comment) => { %>
+        <article class="mb-3" style="border-bottom: 1px solid var(--color-border); padding-bottom: 0.75rem;">
+          <p class="text-muted" style="margin: 0 0 0.25rem 0;"><strong><%= comment.author_username %></strong></p>
+          <!-- Mitigates [VULN-002][A03:XSS-Stored][CWE-79]: the body is
+               already sanitized at write time (comments/service.js strips
+               all HTML via DOMPurify before persisting) AND rendered here
+               with `<%= %>` (auto-escaped), never `<%- %>` — two
+               independent layers, in direct contrast with
+               v1-inseguro/src/views/tickets/detail.ejs, which renders
+               comment.body raw. -->
+          <div><%= comment.body %></div>
+        </article>
+      <% }) %>
+
+      <form method="post" action="/tickets/<%= ticket.id %>/comments" class="mt-3">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <div class="form-group">
+          <label class="form-label">Agregar comentario</label>
+          <textarea class="form-control" name="body" rows="3" required placeholder="Escribí tu comentario..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Comentar</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-header">
+      <h2 class="card-title">Adjuntos</h2>
+    </div>
+    <div class="card-body">
+      <% if (attachments.length === 0) { %>
+        <p class="text-muted">Todavía no hay adjuntos.</p>
+      <% } %>
+
+      <% if (attachments.length > 0) { %>
+        <ul class="mb-3">
+          <% attachments.forEach((attachment) => { %>
+            <li>
+              <!-- Mitigates [VULN-006][A05:Unrestricted-Upload][CWE-434]:
+                   the original client filename is display metadata only
+                   (never used as a filesystem path — see
+                   modules/attachments/service.js) and is rendered here with
+                   `<%= %>` (auto-escaped), never `<%- %>`. Download goes
+                   through an authenticated, ownership-checked route, never
+                   a static path under /public. -->
+              <a href="/tickets/<%= ticket.id %>/attachments/<%= attachment.id %>/download">
+                <%= attachment.original_filename %>
+              </a>
+              <span class="text-muted">(<%= attachment.mime_type %>, <%= attachment.size_bytes %> bytes)</span>
+            </li>
+          <% }) %>
+        </ul>
+      <% } %>
+
+      <form method="post" action="/tickets/<%= ticket.id %>/attachments" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <div class="form-group">
+          <label class="form-label">Adjuntar archivo (screenshot o log)</label>
+          <input class="form-control" type="file" name="attachment" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Subir adjunto</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
